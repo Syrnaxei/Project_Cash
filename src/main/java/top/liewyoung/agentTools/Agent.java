@@ -35,6 +35,11 @@ public class Agent {
         this.sex = Sex.MALE;
     }
 
+    public String createMessage(Role role,String content) {
+        Message message = new Message(role,content);
+        return message.toString();
+    }
+
     public String getFullName() {
         return firstName + " " + lastName;
     }
@@ -60,25 +65,3 @@ public class Agent {
 }
 
 
-class Message {
-
-    public Message(Role roleType, String content) {
-        switch (roleType) {
-            case ASSISTANT:
-                message = "assistant:" + content;
-                break;
-            case SYSTEM:
-                message = "system:" + content;
-                break;
-            default:
-                message = "user:" + content;
-                break;
-        }
-    }
-
-    protected String getMessage() {
-        return message;
-    }
-
-    private final String message;
-}
