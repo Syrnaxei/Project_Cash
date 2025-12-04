@@ -1,4 +1,5 @@
 package top.liewyoung.agentTools;
 
-public class Career {
+public enum Career {
+    PRESIDENT,DOCTOR,DENTIST,TEACHER,GOVERNMENT
 }

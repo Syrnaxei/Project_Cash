@@ -1,4 +1,5 @@
 package top.liewyoung.agentTools;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Message {

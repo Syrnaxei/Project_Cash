@@ -6,7 +6,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.URI;
 import java.time.Duration;
-import java.util.ArrayList;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import top.liewyoung.agentTools.ChatRequest;
@@ -21,6 +21,7 @@ import top.liewyoung.agentTools.Role;
 
 
 public final class Requests {
+    private static final ObjectMapper mapper = new ObjectMapper();
     private final URI uri;
     private final HttpClient client;
     private final String apiKey;
@@ -39,17 +40,16 @@ public final class Requests {
     }
 
     /**
-     *
-     * @param request 需要一个ChatRequest对象
-     * @return  HttpResponse<String> 返回值
+     * 本方法是<b>专为Chat优化后的方法</b>，请不要当成普通POST方法
+     * @param content 需要一个ChatRequest对象
+     * @return {@code HttpResponse<String>}
      * @throws IOException 读入错误
      * @throws InterruptedException 内部错误
      */
-    public HttpResponse<String> post(ChatRequest request) throws IOException, InterruptedException {
-        ObjectMapper mapper = new ObjectMapper();
-        String body = mapper.writeValueAsString(request);
+    public HttpResponse<String> post(ChatRequest content) throws IOException, InterruptedException {
+        String body = mapper.writeValueAsString(content);
 
-        HttpRequest request1 = HttpRequest.newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .header("Content-Type", "application/json")
                 .header("Authorization", "Bearer " + this.apiKey)
@@ -57,7 +57,7 @@ public final class Requests {
                 .timeout(Duration.ofSeconds(20))
                 .build();
 
-        return client.send(request1,HttpResponse.BodyHandlers.ofString());
+        return client.send(request,HttpResponse.BodyHandlers.ofString());
     }
 
     //测试代码
