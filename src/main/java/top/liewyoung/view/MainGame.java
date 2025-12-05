@@ -2,6 +2,7 @@ package top.liewyoung.view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 public class MainGame {
     //基础元素
@@ -9,9 +10,9 @@ public class MainGame {
     private final Side side = new Side();
 
     //布局设定
-    private final Color mainBack =new Color(200, 227, 227);
-    private final Color sideBack =new Color(230, 230, 177);
-    private final Color ReactColor = new Color(0,91,171);
+    private final Color mainBack = new Color(200, 227, 227);
+    private final Color sideBack = new Color(230, 230, 177);
+    private final Color ReactColor = new Color(0, 91, 171);
 
     public MainGame() {
         JFrame frame = new JFrame("现金流");
@@ -21,11 +22,11 @@ public class MainGame {
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        frame.setLocation(screenSize.width/2-450,screenSize.height/2-300);
+        frame.setLocation(screenSize.width / 2 - 450, screenSize.height / 2 - 300);
 
         frame.setLayout(new BorderLayout());
 
-        frame.add(map,  BorderLayout.EAST);
+        frame.add(map, BorderLayout.EAST);
         frame.add(side, BorderLayout.WEST);
 
 
@@ -46,6 +47,7 @@ public class MainGame {
         public GameMap() {
             setPreferredSize(new Dimension(600, 600)); // 给一点参考大小
         }
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -54,20 +56,20 @@ public class MainGame {
 
 
             g.setColor(ReactColor);
-            for(int i = 0; i < 9 ;i++) {
-                g.fillRect(i*(reactWidth+spaceWidth)+leftSpacing, topSpacing, reactWidth, reactHeight);
+            for (int i = 0; i < 9; i++) {
+                g.fillRect(i * (reactWidth + spaceWidth) + leftSpacing, topSpacing, reactWidth, reactHeight);
             }
 
-            int num = (525-topSpacing-reactHeight-spaceHeight)/60;
+            int num = (525 - topSpacing - reactHeight - spaceHeight) / 60;
 
-            for(int i = 0; i < num; i++) {
-                int y = i * (spaceHeight + reactHeight) + topSpacing + reactHeight+spaceHeight;
+            for (int i = 0; i < num; i++) {
+                int y = i * (spaceHeight + reactHeight) + topSpacing + reactHeight + spaceHeight;
                 g.fillRect(leftSpacing, y, reactWidth, reactHeight);
-                g.fillRect(8*(reactWidth+spaceWidth)+leftSpacing, y, reactWidth, reactHeight);
+                g.fillRect(8 * (reactWidth + spaceWidth) + leftSpacing, y, reactWidth, reactHeight);
             }
 
-            for(int i = 0; i < 9 ;i++) {
-                g.fillRect(i*(reactWidth+spaceWidth)+leftSpacing, 515, reactWidth, reactHeight);
+            for (int i = 0; i < 9; i++) {
+                g.fillRect(i * (reactWidth + spaceWidth) + leftSpacing, 515, reactWidth, reactHeight);
             }
         }
     }
@@ -77,6 +79,7 @@ public class MainGame {
         public Side() {
             setPreferredSize(new Dimension(300, 600)); // 宽度 200，高度随便
         }
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -89,5 +92,6 @@ public class MainGame {
     public static void main(String[] args) {
         //函数式接口
         SwingUtilities.invokeLater(MainGame::new);
+
     }
 }

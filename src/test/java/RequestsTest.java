@@ -9,7 +9,7 @@ import java.net.http.HttpResponse;
 public class RequestsTest {
     public static void main(String[] args) {
         String url = "https://api.deepseek.com/chat/completions";
-        Requests chat = new Requests(url,"sk-8567162759d7498db83f0bd62ed3bc04");
+        Requests chat = new Requests(url,"sdfsdf");
         ChatRequest user1 = new ChatRequest("deepseek-chat",false);
 
         user1.addMessage(new Message(Role.USER,"Hello"));
