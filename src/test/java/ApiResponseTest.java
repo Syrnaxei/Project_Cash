@@ -13,17 +13,15 @@ public class ApiResponseTest {
     public static void main(String[] args) {
         String url = "https://api.deepseek.com/chat/completions";
         Requests chat = new Requests(url, ConfigLoader.getValue("apiKey"));
-        ChatRequest user1 = new ChatRequest("deepseek-chat",false);
-
-        user1.addMessage(new Message(Role.USER,"Hello"));
-
+        ChatRequest user1 = new ChatRequest("deepseek-chat", false);
         ObjectMapper mapper = new ObjectMapper();
+        user1.addMessage(new Message(Role.USER, "Hello"));
 
-        try{
+        try {
             HttpResponse<String> response = chat.post(user1);
-            ApiResponse apiResponse = mapper.readValue(response.body(),ApiResponse.class);
-
-        }catch(IOException | InterruptedException e){
+            ApiResponse api = mapper.readValue(response.body(), ApiResponse.class);
+            System.out.println(api.choices().get(0).message().getContent());
+        } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }

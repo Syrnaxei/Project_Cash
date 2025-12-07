@@ -10,6 +10,9 @@ public class Message {
     @JsonProperty("content")
     private String content;
 
+    public Message() {
+    }
+
     /**
      *
      * @param role 枚举
@@ -24,13 +27,8 @@ public class Message {
         this.content = content;
     }
 
-    public Message(String role, String content) throws RoleInvalid {
-        switch (role) {
-            case "system" -> this.role = "system";
-            case "assistant" -> this.role = "assistant";
-            case "user" -> this.role = "user";
-            default -> throw new RoleInvalid(role);
-        }
-        this.content = content;
-    }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 }
