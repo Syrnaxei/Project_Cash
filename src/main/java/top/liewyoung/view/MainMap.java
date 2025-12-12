@@ -9,7 +9,10 @@ import java.util.List;
  * @author LiewYoung
  * @since  2025/12/12
  */
+
 public class MainMap extends JPanel {
+
+    //方块长宽以及间隙定义
     private static final int TILE_WIDTH = 60;
     private static final int TILE_HEIGHT = 60;
     private static final int TILE_SPACING = 15;
@@ -100,8 +103,11 @@ public class MainMap extends JPanel {
     private void drawTiles(Graphics2D g2d) {
         for (int i = 0; i < tiles.size(); i++) {
             Tile tile = tiles.get(i);
-            
-            // 计算屏幕坐标
+
+            /*
+             *绘制地块
+             * 只要把地块当成上下右边有间隙也就是一面没有间隙的方块就好了
+             */
             int x = MAP_MARGIN + tile.x * (TILE_WIDTH + TILE_SPACING);
             int y = MAP_MARGIN + tile.y * (TILE_HEIGHT + TILE_SPACING);
             
@@ -136,7 +142,8 @@ public class MainMap extends JPanel {
                           y + TILE_HEIGHT / 2 + 15);
         }
     }
-    
+
+    //绘制玩家也就是个圆
     private void drawPlayer(Graphics2D g2d) {
         if (tiles.isEmpty() || playerPosition < 0 || playerPosition >= tiles.size()) {
             return;
@@ -161,7 +168,10 @@ public class MainMap extends JPanel {
         g2d.setStroke(new BasicStroke(2));
         g2d.drawOval(x - 8, y - 8, 16, 16);
     }
-    
+
+
+
+    //设置丰富多彩的颜色
     private Color getTileColor(String type) {
         switch (type) {
             case "起点": return START_COLOR;

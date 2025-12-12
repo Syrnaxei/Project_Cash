@@ -12,14 +12,22 @@ import java.awt.*;
 
 public class DashboardPanel extends JPanel {
     private final JPanel contentSheet;//内容面板
+
     private final JPanel headerContent;//表头
     private final JPanel perContent;//资产仪表板
+
+    private final JPanel headerEvent;//事件表头
+    private final JPanel eventContent;//事件面板
     private final JPanel dataPanel;
+    private JPanel eventLog;
+    private final JButton diceButton;
+
     private double income;//收入
     private double outcome;//支出
     private double depreciation;//折旧
     private double cost;//维护花费
-    private JPanel eventLog;
+    private int lastDiced;
+
 
     public DashboardPanel() {
         contentSheet = new JPanel(new GridLayout(2, 4, 5, 5));
@@ -58,15 +66,6 @@ public class DashboardPanel extends JPanel {
 
         dataPanel = new JPanel(new GridLayout(0, 1, 5, 5));
 
-        for (int i = 0; i < 4; i++) {
-            JPanel values = new JPanel(new GridLayout(1, 4, 5, 5));
-            values.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
-            values.add(new JLabel("1000"));
-            values.add(new JLabel("-100"));
-            values.add(new JLabel("-100"));
-            values.add(new JLabel("正常"));
-            dataPanel.add(values);
-        }
 
         JScrollPane scrollPane = new JScrollPane(dataPanel);
         perContent.add(scrollPane);
@@ -74,23 +73,41 @@ public class DashboardPanel extends JPanel {
         headerContent.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
         contentSheet.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
+        eventContent = new JPanel(new GridLayout(0, 1, 5, 5));
+
+        headerEvent = new JPanel(new GridLayout(1, 1, 5, 5));
+        headerEvent.add(new JLabel("事件日志"));
+
         eventLog = new JPanel(new GridLayout(0, 1, 5, 5));
         eventLog.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
         eventLog.setBackground(Color.pink);
-        eventLog.add(new JLabel("事件日志"));
         JScrollPane eventLogScrollPane = new JScrollPane(eventLog);
+
+        eventContent.add(headerEvent);
+        eventContent.add(eventLogScrollPane);
+
+        diceButton = new JButton("投骰子");
+        diceButton.setSize(0,20);
+        diceButton.addActionListener(e -> {
+            int dice = (int) (Math.random() * 6 + 1);
+            lastDiced = dice;
+            JOptionPane.showMessageDialog(null, "投掷结果为：" + dice);
+            insertEvent("投掷骰子，结果为：" + dice);
+        });
+
 
         setLayout(new GridLayout(0, 1, 10, 5));
         add(contentSheet);
         add(perContent);
-        add(eventLogScrollPane);
+        add(eventContent);
+        add(diceButton);
 
        setBorder(BorderFactory.createEmptyBorder(13, 13, 13, 13));
        setSize(500,getHeight());
 
     }
 
-    public void InsertData(String name, double depreciation, double outcome, String  status) {
+    public void insertProperty(String name, double depreciation, double outcome, String  status) {
         JPanel row = new JPanel(new GridLayout(1, 4, 5, 5));
         row.add(new JLabel(name));
         row.add(new JLabel(String.valueOf(depreciation)));
@@ -100,6 +117,13 @@ public class DashboardPanel extends JPanel {
         dataPanel.add(row);
         dataPanel.revalidate();
         dataPanel.repaint();
+    }
+
+    public void insertEvent(String event) {
+        JLabel label = new JLabel(event);
+        eventLog.add(label);
+        eventLog.revalidate();
+        eventLog.repaint();
     }
 
     public static void main(String[] args) {
