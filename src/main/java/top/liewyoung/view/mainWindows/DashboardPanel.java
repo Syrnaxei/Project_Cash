@@ -22,7 +22,7 @@ public class DashboardPanel extends JPanel {
     private int income = 0;
     private int outcome = 0;
 
-    // --- Material Design 3 Color Palette (Moss Green Theme) ---
+
     // Surface: 整个窗口的背景，稍微带一点点灰/绿的暖白
     private final Color MD_SURFACE = new Color(253, 253, 245);
     // Primary: 最主要的按钮、强调色 (深苔藓绿)
@@ -44,6 +44,8 @@ public class DashboardPanel extends JPanel {
     private final Font FONT_TITLE = new Font("微软雅黑", Font.BOLD, fontSize.title());
 
     public DashboardPanel() {
+        setPreferredSize(new Dimension(300,getHeight()));
+
         // 全局设置
         setLayout(new BorderLayout(0, 16)); // MD3 通常间距稍大，设为 16px
         setBorder(new EmptyBorder(16, 16, 16, 16));
@@ -96,7 +98,7 @@ public class DashboardPanel extends JPanel {
     }
 
     /**
-     * 顶部收支概览面板 - 风格：Filled Card (填充卡片)
+     * 顶部收支概览面板
      */
     class InfoPanel extends JPanel {
         private final JLabel incomeDataLabel;
@@ -186,7 +188,7 @@ public class DashboardPanel extends JPanel {
 
             table = new JTable(tableModel);
 
-            // --- MD3 表格样式 ---
+
             table.setRowHeight(40); // 更舒适的行高
             table.setFont(FONT_NORMAL);
             table.setForeground(new Color(28, 27, 31)); // 接近黑色的深灰
