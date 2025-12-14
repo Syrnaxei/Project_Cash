@@ -1,5 +1,6 @@
 package top.liewyoung.view.component;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import top.liewyoung.view.ColorSystem.MaterialPalette;
 
 import javax.swing.*;
@@ -17,25 +18,10 @@ public class MDbutton extends JButton {
     public MDbutton(String text) {
         super(text);
         setPreferredSize(new Dimension(100, 40));
-        setContentAreaFilled(false);
+        putClientProperty(FlatClientProperties.STYLE,"arc: 40");
         setBorderPainted(false);
-        setFocusPainted(false);
-        setFont(new Font("微软雅黑", Font.BOLD, 12));
+        setBackground(palette.primary());
+        setFont(UIManager.getFont("defaultFont").deriveFont(Font.BOLD, 14f));
         setForeground(palette.onPrimary());
-    }
-    @Override
-    protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        if (getModel().isPressed()) {
-            g2d.setColor(palette.primary().darker());
-        } else {
-            g2d.setColor(palette.primary());
-        }
-
-        g2d.fillRoundRect(0, 0, getWidth(), getHeight(), getHeight(), getHeight());
-
-        super.paintComponent(g);
     }
 }

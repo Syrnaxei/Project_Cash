@@ -1,5 +1,7 @@
 package top.liewyoung.view.component;
 
+import com.formdev.flatlaf.FlatClientProperties;
+import com.formdev.flatlaf.FlatLightLaf;
 import top.liewyoung.view.ColorSystem.MaterialPalette;
 
 import javax.swing.*;
@@ -43,35 +45,8 @@ public class MDialog extends JDialog {
     }
 
     protected JButton buttonFactory(String text) {
-        JButton button = new JButton(text) {
-            @Override
-            protected void paintComponent(Graphics g) {
-
-
-                Graphics2D g2d = (Graphics2D) g.create();
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-                if (getModel().isPressed()) {
-                    g2d.setColor(palette.primary().darker());
-                } else {
-                    g2d.setColor(palette.primary());
-                }
-
-                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), getHeight(), getHeight());
-                g2d.dispose();
-                super.paintComponent(g);
-            }
-        };
-        button.setPreferredSize(new Dimension(100, 40));
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-        button.setFont(new Font("微软雅黑", Font.BOLD, 12));
-        button.setForeground(palette.onPrimary());
-
-        button.addActionListener(e -> {
-            dispose();
-        });
+        JButton button = new MDbutton(text);
+        button.addActionListener(e -> dispose());
 
 
         return button;
@@ -90,6 +65,7 @@ public class MDialog extends JDialog {
 
 
     public static void main(String[] args) {
+        FlatLightLaf.setup();
         JFrame frame = new JFrame("MD3 Dialog");
         JButton button = new JButton("Open Dialog");
         button.addActionListener(e -> {

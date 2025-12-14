@@ -16,6 +16,7 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "com.formdev:flatlaf:3.7"
 }
 
 test {

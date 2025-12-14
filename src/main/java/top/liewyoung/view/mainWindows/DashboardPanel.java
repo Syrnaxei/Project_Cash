@@ -1,6 +1,7 @@
 package top.liewyoung.view.mainWindows;
 
 import top.liewyoung.strategy.MapPostition;
+import top.liewyoung.view.component.MDbutton;
 import top.liewyoung.view.component.MDialog;
 
 import javax.swing.*;
@@ -74,34 +75,19 @@ public class DashboardPanel extends JPanel {
         //  底部按钮区域
         JButton diceButton = buttonFactory("摇骰子");
         diceButton.addActionListener(e -> {
-            this.lastDice = dice.nextInt(1, 7);
-            playerPosition += this.lastDice;
-            String type = map.getType(
-                    mapPostition.mapOrder.get(playerPosition % 28).x(),
-                    mapPostition.mapOrder.get(playerPosition % 28).y()
-            ).name();
-            MDialog dialog = new MDialog("你摇出了 " + this.lastDice + "类型："+type, "我知道了");
-
-            map.updatePlayerPosition(
-                    mapPostition.mapOrder.get(playerPosition % 28).x(),
-                    mapPostition.mapOrder.get(playerPosition % 28).y()
-            );
-
-            dialog.setLocationRelativeTo(this);
-            dialog.setAlwaysOnTop(true);
-            dialog.setModal(true);
-            dialog.setVisible(true);
-
+            diceEvent();
         });
 
         JButton helpButton = buttonFactory("关于");
         helpButton.addActionListener(e -> {
-            JFrame frame = new JFrame("关于");
-            frame.add(new Setting());
-            frame.setLocation(300,100);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.pack();
-            frame.setVisible(true);
+            SwingUtilities.invokeLater(() -> {
+                JFrame frame = new JFrame("关于");
+                frame.add(new Setting());
+                frame.setLocation(300, 100);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.pack();
+                frame.setVisible(true);
+            });
         });
 
 
@@ -117,6 +103,31 @@ public class DashboardPanel extends JPanel {
         add(buttonContainer, BorderLayout.SOUTH);
     }
 
+    public void diceEvent() {
+        DashboardPanel.lastDice = dice.nextInt(1, 7);
+        
+        // 先触发骰子滚动动画
+        map.rollDice(DashboardPanel.lastDice, () -> {
+            // 动画完成后执行后续逻辑
+            playerPosition += DashboardPanel.lastDice;
+            String type = map.getType(
+                    mapPostition.mapOrder.get(playerPosition % 28).x(),
+                    mapPostition.mapOrder.get(playerPosition % 28).y()
+            ).name();
+            MDialog dialog = new MDialog("你摇出了 " + DashboardPanel.lastDice + " 类型：" + type, "我知道了");
+
+            map.updatePlayerPosition(
+                    mapPostition.mapOrder.get(playerPosition % 28).x(),
+                    mapPostition.mapOrder.get(playerPosition % 28).y()
+            );
+
+            dialog.setLocationRelativeTo(this);
+            dialog.setAlwaysOnTop(true);
+            dialog.setModal(true);
+            dialog.setVisible(true);
+        });
+    }
+
     public void updateStats(int newIncome, int newOutcome) {
         this.income = newIncome;
         this.outcome = newOutcome;
@@ -124,30 +135,7 @@ public class DashboardPanel extends JPanel {
     }
 
     private JButton buttonFactory(String text) {
-        JButton Button = new JButton(text) {
-            // 自定义绘制圆角背景
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                if (getModel().isPressed()) {
-                    g2.setColor(MD_PRIMARY.darker());
-                } else {
-                    g2.setColor(MD_PRIMARY);
-                }
-                // 绘制圆角矩形 (高度为圆角直径，即全圆角/胶囊形)
-                g2.fill(new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), getHeight(), getHeight()));
-                g2.dispose();
-                super.paintComponent(g);
-            }
-        };
-        Button.setFont(new Font("微软雅黑", Font.BOLD, 14));
-        Button.setForeground(MD_ON_PRIMARY);
-        Button.setFocusPainted(false);
-        Button.setContentAreaFilled(false); // 去除默认背景
-        Button.setBorderPainted(false);     // 去除默认边框
-        Button.setPreferredSize(new Dimension(120, 40));// 设置合适的大小
-
+        JButton Button = new MDbutton(text);
         return Button;
     }
 
@@ -277,6 +265,10 @@ public class DashboardPanel extends JPanel {
         public void addProperty(String name, String value, String depreciation, String status) {
             tableModel.addRow(new Object[]{name, value, depreciation, status});
         }
+    }
+
+    public void addProperty(String name, String value, String depreciation, String status) {
+        propertyPanel.addProperty(name, value, depreciation, status);
     }
 
 
