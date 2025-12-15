@@ -1,4 +1,4 @@
-package org;
+package org.atom;
 
 public class Stock implements Asset {
     private String name;        // 股票名称

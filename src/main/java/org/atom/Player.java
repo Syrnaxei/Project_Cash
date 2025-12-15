@@ -1,4 +1,4 @@
-package org;
+package org.atom;
 public class Player {
         private String profession;      // 职业
         private int cash;               // 现金

@@ -1,9 +1,7 @@
-package org;
+package org.atom;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 // 职业实体类
 class Profession {
