@@ -39,6 +39,9 @@ public class Setting extends JPanel {
         ImageIcon imageIcon = new ImageIcon("src/main/resources/Avstar_1.jpg");
         listPanel.add(cardFactory("刘瑞翔", "North China University of Water Resources and Electric Power", imageIcon));
 
+        ImageIcon imageIcon_1 = new ImageIcon("src/main/resources/Avstar_2.jpg");
+        listPanel.add(cardFactory("Syrnaxei", "North China University of Water Resources and Electric Power", imageIcon_1));
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setOpaque(false);
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));

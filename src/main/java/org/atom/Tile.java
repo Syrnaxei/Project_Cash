@@ -1,4 +1,4 @@
-package org;
+package org.atom;
 
 public class Tile {
     public enum TileType {
