@@ -1,4 +1,4 @@
-package org;
+package org.atom;
 public class RealEstate implements Asset {
         private String name;        // 房产名称
         private int cost;           // 购买成本
