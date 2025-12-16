@@ -1,10 +1,14 @@
-package com.syrnaxei.game.game2048;
+package com.syrnaxei.game.game2048.core;
+
+import com.syrnaxei.game.game2048.api.Game2048Listener;
 
 import java.util.Random;
 
 public class Board {
     private int[][] board;
     private int score = 0;
+    private boolean gameOver;
+    private Game2048Listener endListener;
     Random random = new Random();
 
     //===================================  创建棋盘 方法  ===================================
@@ -96,5 +100,16 @@ public class Board {
         score = 0;
         addNumber();
         addNumber();
+    }
+
+    public void setListener(Game2048Listener listener) {
+        this.endListener = listener;
+    }
+
+    public void triggerGameOver() {
+        this.gameOver = true;
+        if (endListener != null) {
+            endListener.onGameEnd(this.score); // 触发回调返回分数
+        }
     }
 }

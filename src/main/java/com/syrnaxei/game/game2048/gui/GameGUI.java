@@ -1,4 +1,8 @@
-package com.syrnaxei.game.game2048;
+package com.syrnaxei.game.game2048.gui;
+
+import com.syrnaxei.game.game2048.core.Board;
+import com.syrnaxei.game.game2048.core.GameConfig;
+import com.syrnaxei.game.game2048.core.MergeLogic;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +28,7 @@ public class GameGUI extends JFrame {
     }
 
     private void initializeUI() {
-        setTitle("NCWUStudyProgram2048");
+        setTitle("Project_Cash_FUNGAME2048");
         setIconImage(gameIcon.getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -183,7 +187,8 @@ public class GameGUI extends JFrame {
         if (board.isGameOver()) {
             SwingUtilities.invokeLater(() -> {
                 JOptionPane.showMessageDialog(this, "Game Over! Final Score: " + board.getScore());
-
+                board.triggerGameOver();
+                this.dispose();
             });
         }
     }

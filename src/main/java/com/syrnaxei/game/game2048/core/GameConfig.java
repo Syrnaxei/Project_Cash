@@ -1,4 +1,4 @@
-package com.syrnaxei.game.game2048;
+package com.syrnaxei.game.game2048.core;
 
 public class GameConfig {
     //====================================  静态 变量  ====================================

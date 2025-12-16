@@ -1,4 +1,7 @@
-package com.syrnaxei.game.game2048;
+package com.syrnaxei.game.game2048.gui;
+
+import com.syrnaxei.game.game2048.core.Board;
+import com.syrnaxei.game.game2048.core.MergeLogic;
 
 import javax.swing.*;
 
