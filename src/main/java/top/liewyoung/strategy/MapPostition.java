@@ -2,10 +2,19 @@ package top.liewyoung.strategy;
 
 import java.util.ArrayList;
 
+/**
+ * MapPostition
+ *
+ * @author LiewYoung
+ * @since 2025/12/17
+ */
+
 public class MapPostition {
 
     private static final int MAP_WIDTH = 8;
     private static final int MAP_HEIGHT = 8;
+
+    /*返回玩家坐标 */
     public ArrayList<Position> mapOrder = new ArrayList<>();
 
     public MapPostition() {

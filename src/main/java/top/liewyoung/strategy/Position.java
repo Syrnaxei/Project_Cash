@@ -1,3 +1,10 @@
 package top.liewyoung.strategy;
 
-public record Position(int x, int y) { }
+/**
+ * Position
+ * 玩家坐标
+ *
+ * @author LiewYoung
+ * @since 2025/12/17
+ */
+public record Position(int x, int y) {}

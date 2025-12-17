@@ -1,5 +1,6 @@
 package top.liewyoung.view.mainWindows;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import top.liewyoung.view.ColorSystem.MaterialPalette;
 import top.liewyoung.view.Stater;
 import top.liewyoung.view.component.MDbutton;
@@ -63,6 +64,11 @@ public class HomePage extends JFrame {
     }
 
     public static void main(String[] args) {
-        new HomePage();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new HomePage();
+            }
+        });
     }
 }

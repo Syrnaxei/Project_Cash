@@ -1,9 +1,7 @@
 package top.liewyoung.view.mainWindows;
 
-import top.liewyoung.strategy.MapPostition;
-import top.liewyoung.view.component.MDbutton;
-import top.liewyoung.view.component.MDialog;
-
+import java.awt.*;
+import java.util.Random;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -12,25 +10,25 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.awt.*;
-import java.util.Random;
+import top.liewyoung.strategy.MapPostition;
+import top.liewyoung.view.component.MDbutton;
+import top.liewyoung.view.component.MDialog;
 
 /**
  * @author LiewYoung
  * @since 2025/12/14
  */
 // 简单的字体记录类
-record FontSize(int title, int heavy, int normal) {
-}
+record FontSize(int title, int heavy, int normal) {}
 
 public class DashboardPanel extends JPanel {
+
     private final InfoPanel infoPanel;
     private final PropertyPanel propertyPanel;
 
     // 数据变量
     private int income = 0;
     private int outcome = 0;
-
 
     // Surface: 整个窗口的背景，稍微带一点点灰/绿的暖白
     private final Color MD_SURFACE = new Color(253, 253, 245);
@@ -48,9 +46,21 @@ public class DashboardPanel extends JPanel {
     private final Color MD_SURFACE_VARIANT = new Color(226, 227, 219);
 
     private final FontSize fontSize = new FontSize(16, 28, 14); // 数字字体稍微加大
-    private final Font FONT_BOLD = new Font("微软雅黑", Font.BOLD, fontSize.heavy());
-    private final Font FONT_NORMAL = new Font("微软雅黑", Font.PLAIN, fontSize.normal());
-    private final Font FONT_TITLE = new Font("微软雅黑", Font.BOLD, fontSize.title());
+    private final Font FONT_BOLD = new Font(
+        "微软雅黑",
+        Font.BOLD,
+        fontSize.heavy()
+    );
+    private final Font FONT_NORMAL = new Font(
+        "微软雅黑",
+        Font.PLAIN,
+        fontSize.normal()
+    );
+    private final Font FONT_TITLE = new Font(
+        "微软雅黑",
+        Font.BOLD,
+        fontSize.title()
+    );
 
     private final Random dice = new Random();
     private final MapDraw map;
@@ -89,7 +99,6 @@ public class DashboardPanel extends JPanel {
             });
         });
 
-
         // 为了让按钮不被拉伸，放进一个 FlowLayout 的 Panel
         JPanel buttonContainer = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonContainer.setBackground(MD_SURFACE); // 与背景融合
@@ -109,15 +118,21 @@ public class DashboardPanel extends JPanel {
         map.rollDice(DashboardPanel.lastDice, () -> {
             // 动画完成后执行后续逻辑
             playerPosition += DashboardPanel.lastDice;
-            String type = map.getType(
-                    mapPostition.mapOrder.get(playerPosition % 28).x(),
-                    mapPostition.mapOrder.get(playerPosition % 28).y()
-            ).name();
-            MDialog dialog = new MDialog("你摇出了 " + DashboardPanel.lastDice + " 类型：" + type, "我知道了");
+            playerPosition = playerPosition % 28;
+            String type = map
+                .getType(
+                    mapPostition.mapOrder.get(playerPosition).x(),
+                    mapPostition.mapOrder.get(playerPosition).y()
+                )
+                .name();
+            MDialog dialog = new MDialog(
+                "你摇出了 " + DashboardPanel.lastDice + " 类型：" + type,
+                "我知道了"
+            );
 
             map.updatePlayerPosition(
-                    mapPostition.mapOrder.get(playerPosition % 28).x(),
-                    mapPostition.mapOrder.get(playerPosition % 28).y()
+                mapPostition.mapOrder.get(playerPosition).x(),
+                mapPostition.mapOrder.get(playerPosition).y()
             );
 
             dialog.setLocationRelativeTo(this);
@@ -142,6 +157,7 @@ public class DashboardPanel extends JPanel {
      * 顶部收支概览面板
      */
     class InfoPanel extends JPanel {
+
         private final JLabel incomeDataLabel;
         private final JLabel outcomeDataLabel;
 
@@ -149,16 +165,20 @@ public class DashboardPanel extends JPanel {
             setLayout(new GridLayout(1, 2, 0, 0));
             setBackground(MD_PRIMARY_CONTAINER); // 容器色背景
 
-
             TitledBorder titledBorder = new TitledBorder(
-                    new LineBorder(MD_PRIMARY_CONTAINER, 0), // 边框颜色与背景一致，隐藏线条
-                    "收支概览",
-                    TitledBorder.CENTER,
-                    TitledBorder.TOP,
-                    FONT_TITLE,
-                    MD_ON_PRIMARY_CONTAINER // 标题颜色
+                new LineBorder(MD_PRIMARY_CONTAINER, 0), // 边框颜色与背景一致，隐藏线条
+                "收支概览",
+                TitledBorder.CENTER,
+                TitledBorder.TOP,
+                FONT_TITLE,
+                MD_ON_PRIMARY_CONTAINER // 标题颜色
             );
-            setBorder(new CompoundBorder(new EmptyBorder(10, 20, 15, 20), titledBorder));
+            setBorder(
+                new CompoundBorder(
+                    new EmptyBorder(10, 20, 15, 20),
+                    titledBorder
+                )
+            );
 
             incomeDataLabel = createDataLabel(income);
             outcomeDataLabel = createDataLabel(outcome);
@@ -171,7 +191,10 @@ public class DashboardPanel extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON
+            );
             g2.setColor(getBackground());
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), 24, 24); // 24px 圆角
         }
@@ -208,6 +231,7 @@ public class DashboardPanel extends JPanel {
      * 资产列表面板 - 风格：Clean Data Table
      */
     class PropertyPanel extends JPanel {
+
         private final DefaultTableModel tableModel;
         private final JTable table;
 
@@ -218,7 +242,12 @@ public class DashboardPanel extends JPanel {
             // 细边框包裹表格
             setBorder(new LineBorder(MD_OUTLINE, 1, true));
 
-            String[] columnNames = {"资产名称", "资产价值", "贬值率", "资产状态"};
+            String[] columnNames = {
+                "资产名称",
+                "资产价值",
+                "贬值率",
+                "资产状态",
+            };
 
             tableModel = new DefaultTableModel(columnNames, 0) {
                 @Override
@@ -228,7 +257,6 @@ public class DashboardPanel extends JPanel {
             };
 
             table = new JTable(tableModel);
-
 
             table.setRowHeight(40); // 更舒适的行高
             table.setFont(FONT_NORMAL);
@@ -246,12 +274,20 @@ public class DashboardPanel extends JPanel {
             header.setForeground(MD_ON_PRIMARY_CONTAINER);
             header.setPreferredSize(new Dimension(0, 40));
             // 去除表头默认凸起边框
-            ((JComponent) table.getTableHeader().getDefaultRenderer()).setBorder(new EmptyBorder(0, 0, 0, 0));
+            ((JComponent) table
+                    .getTableHeader()
+                    .getDefaultRenderer()).setBorder(
+                new EmptyBorder(0, 0, 0, 0)
+            );
 
-            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            DefaultTableCellRenderer centerRenderer =
+                new DefaultTableCellRenderer();
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);
             for (int i = 0; i < table.getColumnCount(); i++) {
-                table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+                table
+                    .getColumnModel()
+                    .getColumn(i)
+                    .setCellRenderer(centerRenderer);
             }
 
             JScrollPane scrollPane = new JScrollPane(table);
@@ -261,14 +297,24 @@ public class DashboardPanel extends JPanel {
             add(scrollPane, BorderLayout.CENTER);
         }
 
-        public void addProperty(String name, String value, String depreciation, String status) {
-            tableModel.addRow(new Object[]{name, value, depreciation, status});
+        public void addProperty(
+            String name,
+            String value,
+            String depreciation,
+            String status
+        ) {
+            tableModel.addRow(
+                new Object[] { name, value, depreciation, status }
+            );
         }
     }
 
-    public void addProperty(String name, String value, String depreciation, String status) {
+    public void addProperty(
+        String name,
+        String value,
+        String depreciation,
+        String status
+    ) {
         propertyPanel.addProperty(name, value, depreciation, status);
     }
-
-
 }

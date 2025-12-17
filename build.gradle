@@ -1,15 +1,15 @@
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm'
-    id 'application'
+
 }
 
 group = 'top.liewyoung'
 version = '1.0-SNAPSHOT'
 
-application {
-    mainClass = 'Main'
-}
+//application {
+  //  mainClass = 'Main'
+//}
 
 repositories {
     mavenCentral()

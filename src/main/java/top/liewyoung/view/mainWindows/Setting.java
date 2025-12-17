@@ -3,6 +3,8 @@ package top.liewyoung.view.mainWindows;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import com.formdev.flatlaf.FlatLightLaf;
 import top.liewyoung.view.ColorSystem.MaterialPalette;
 import top.liewyoung.view.Stater;
 import top.liewyoung.view.component.CircleImageLabel;
@@ -106,11 +108,17 @@ public class Setting extends JPanel {
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("关于");
+        FlatLightLaf.setup();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame("关于");
 
-        frame.add(new Setting());
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+                frame.add(new Setting());
+                frame.pack();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+            }
+        });
     }
 }
