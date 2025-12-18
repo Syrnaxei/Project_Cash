@@ -20,6 +20,7 @@ public class EventProcessor {
     private Player currentPlayer;
     private Random random;
     private boolean testMode;
+    private Runnable uiRefreshCallback = null;
 
     public EventProcessor(Player player) {
         this.currentPlayer = player;
@@ -37,6 +38,16 @@ public class EventProcessor {
         this.currentPlayer = player;
     }
 
+// 设置UI刷新回调
+    public void setUiRefreshCallback(Runnable callback) {
+        this.uiRefreshCallback = callback;
+    }
+
+    private void refreshUI() {
+        if (uiRefreshCallback != null) {
+            uiRefreshCallback.run();
+        }
+    }
     public void processEvent(TitlesTypes titlesTypes) {
         if (currentPlayer == null) {
             if (!testMode) {
@@ -683,8 +694,7 @@ public class EventProcessor {
      * 小游戏或趣味挑战
      */
     private void handleFunGameEvent() {
-        //int gameType = random.nextInt(4); // 0-2 三种小游戏
-        int gameType = 3;
+        int gameType = random.nextInt(4); // 0-2 三种小游戏
 
         switch (gameType) {
             case 0: // 猜数字游戏
@@ -849,6 +859,7 @@ public class EventProcessor {
                                     "2048 结束",
                                     JOptionPane.INFORMATION_MESSAGE
                             );
+                            refreshUI();
                         }
                     }
                 });
