@@ -2,6 +2,9 @@ package top.liewyoung.view.tools;
 
 import java.util.Random;
 import javax.swing.JOptionPane;
+
+import com.syrnaxei.game.game2048.api.Game2048;
+import com.syrnaxei.game.game2048.api.Game2048Listener;
 import org.atom.Player;
 import top.liewyoung.strategy.TitlesTypes;
 
@@ -17,6 +20,7 @@ public class EventProcessor {
     private Player currentPlayer;
     private Random random;
     private boolean testMode;
+    private Runnable uiRefreshCallback = null;
 
     public EventProcessor(Player player) {
         this.currentPlayer = player;
@@ -34,6 +38,16 @@ public class EventProcessor {
         this.currentPlayer = player;
     }
 
+// 设置UI刷新回调
+    public void setUiRefreshCallback(Runnable callback) {
+        this.uiRefreshCallback = callback;
+    }
+
+    private void refreshUI() {
+        if (uiRefreshCallback != null) {
+            uiRefreshCallback.run();
+        }
+    }
     public void processEvent(TitlesTypes titlesTypes) {
         if (currentPlayer == null) {
             if (!testMode) {
@@ -680,7 +694,7 @@ public class EventProcessor {
      * 小游戏或趣味挑战
      */
     private void handleFunGameEvent() {
-        int gameType = random.nextInt(3); // 0-2 三种小游戏
+        int gameType = random.nextInt(4); // 0-2 三种小游戏
 
         switch (gameType) {
             case 0: // 猜数字游戏
@@ -830,6 +844,25 @@ public class EventProcessor {
                         );
                     }
                 }
+                break;
+            case 3:
+                // 调用2048
+                Game2048.start(new Game2048Listener() {
+                    @Override
+                    public void onGameEnd(int finalScore) {
+                        currentPlayer.setCash(currentPlayer.getCash() + finalScore);
+                        if (!testMode) {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    String.format("2048 游戏结束！\n得分：%d\n当前现金：%d元",
+                                            finalScore, currentPlayer.getCash()),
+                                    "2048 结束",
+                                    JOptionPane.INFORMATION_MESSAGE
+                            );
+                            refreshUI();
+                        }
+                    }
+                });
                 break;
         }
     }

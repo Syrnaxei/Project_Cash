@@ -15,6 +15,7 @@ public class GameGUI extends JFrame {
     private final MergeLogic mergeLogic;
     private TilePanel[][] tilePanels;
     private JLabel scoreLabel;
+    private JLabel countdownLabel;
 
     ImageIcon gameIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/images/icon/game_icon2048.png")));
 
@@ -25,6 +26,7 @@ public class GameGUI extends JFrame {
         initializeUI();
         setupKeyListener();
         refreshBoard(); // 显示初始方块
+        startCountdown();
     }
 
     private void initializeUI() {
@@ -46,12 +48,15 @@ public class GameGUI extends JFrame {
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
         topPanel.add(scoreLabel, BorderLayout.WEST);
 
-        //refresh button
-        JPanel refreshPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        refreshPanel.setOpaque(false);
-        JButton refreshButton = createRefreshButton();
-        refreshPanel.add(refreshButton);
-        topPanel.add(refreshPanel, BorderLayout.EAST);
+        // 倒计时
+        JPanel countdownPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        countdownPanel.setOpaque(false);
+        // 初始化倒计时标签
+        countdownLabel = new JLabel("Countdown: " + GameConfig.remainingSeconds + "s");
+        countdownLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        countdownLabel.setForeground(Color.RED);
+        countdownPanel.add(countdownLabel);
+        topPanel.add(countdownPanel, BorderLayout.EAST);
 
         //add topPanel to mainPanel
         mainPanel.add(topPanel, BorderLayout.NORTH);
@@ -88,14 +93,32 @@ public class GameGUI extends JFrame {
     }
 
     //refreshButton creat fuc
-    private JButton createRefreshButton() {
-        JButton refreshBotton = new JButton("R");
-        refreshBotton.addActionListener(e -> {
-            board.resetBoard();
-            refreshBoard();
-            this.requestFocusInWindow();
+    private javax.swing.Timer swingTimer;
+
+    private void startCountdown() {
+        if (swingTimer != null) {
+            swingTimer.stop();
+        }
+        countdownLabel.setText("Countdown: " + GameConfig.remainingSeconds + "s");
+
+        swingTimer = new javax.swing.Timer(1000, e -> {
+            GameConfig.remainingSeconds--;
+            if (GameConfig.remainingSeconds > 0) {
+                countdownLabel.setText(GameConfig.remainingSeconds + "s");
+            } else {
+                swingTimer.stop();
+                countdownLabel.setText("Time's up!");
+                onCountdownFinish();
+            }
         });
-        return refreshBotton;
+        swingTimer.start();
+    }
+
+    private void onCountdownFinish() {
+        SwingUtilities.invokeLater(() -> {
+            board.triggerGameOver();
+            this.dispose();
+        });
     }
 
 
@@ -126,10 +149,6 @@ public class GameGUI extends JFrame {
                     case KeyEvent.VK_RIGHT:
                         mergeLogic.mergeRight();
                         moved = !boardsEqual(boardBefore, board.getBoard());
-                        break;
-                    case KeyEvent.VK_R:
-                        board.resetBoard();
-                        refreshBoard();
                         break;
                 }
 
@@ -186,7 +205,6 @@ public class GameGUI extends JFrame {
     private void checkGameOver() {
         if (board.isGameOver()) {
             SwingUtilities.invokeLater(() -> {
-                JOptionPane.showMessageDialog(this, "Game Over! Final Score: " + board.getScore());
                 board.triggerGameOver();
                 this.dispose();
             });

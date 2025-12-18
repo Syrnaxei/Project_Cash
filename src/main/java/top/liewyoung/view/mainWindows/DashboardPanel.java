@@ -168,6 +168,8 @@ public class DashboardPanel extends JPanel {
     public void setCurrentPlayer(Player player) {
         this.currentPlayer = player;
         this.eventProcessor = new EventProcessor(player);
+        //设置 UI 刷新回调
+        this.eventProcessor.setUiRefreshCallback(() -> infoPanel.refreshData());
     }
 
     /**
