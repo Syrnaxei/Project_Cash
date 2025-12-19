@@ -49,6 +49,8 @@ public final class Requests {
     public HttpResponse<String> post(ChatRequest content) throws IOException, InterruptedException {
         String body = mapper.writeValueAsString(content);
 
+        //System.out.println(body);
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(uri)
                 .header("Content-Type", "application/json")

@@ -99,7 +99,7 @@ public class AssetManager {
         }
     }
 
-    // ==================== 回调设置 ====================
+
 
     public void setOnAssetAdded(Consumer<Asset> callback) {
         this.onAssetAdded = callback;

@@ -32,7 +32,7 @@ public class EventContext {
         this.testMode = testMode;
     }
 
-    // ==================== Getter/Setter ====================
+
 
     public Player getPlayer() {
         return player;
@@ -64,7 +64,7 @@ public class EventContext {
         }
     }
 
-    // ==================== 弹窗便捷方法 ====================
+
 
     /**
      * 显示消息对话框
@@ -99,7 +99,7 @@ public class EventContext {
         return MDialog.showInputDialog(null, message, title, MessageType.QUESTION);
     }
 
-    // ==================== 玩家操作便捷方法 ====================
+
 
     /**
      * 获取玩家当前现金
@@ -176,7 +176,7 @@ public class EventContext {
         return min + random.nextInt(max - min);
     }
 
-    // ==================== 资产操作便捷方法 ====================
+
 
     /**
      * 添加资产

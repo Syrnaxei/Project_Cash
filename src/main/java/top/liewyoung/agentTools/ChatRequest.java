@@ -19,6 +19,8 @@ public class ChatRequest {
     private ArrayList<Message> messages;
     @JsonProperty("stream")
     private boolean stream;
+    @JsonProperty("response_format")
+    private ResponseFormat responseFormat ;
 
     /**
      *
@@ -29,6 +31,7 @@ public class ChatRequest {
         this.model = model;
         this.messages = new  ArrayList<Message>();
         this.stream = stream;
+        this.responseFormat = new ResponseFormat();
     }
 
     public void addMessage(Message message) {
@@ -43,6 +46,19 @@ public class ChatRequest {
         newQ.addMessage(new Message(Role.USER,"Hello World!"));
 
         System.out.println(mapper.writeValueAsString(newQ));
+    }
+
+    class ResponseFormat {
+        @JsonProperty("type")
+        private String type;
+
+        public ResponseFormat() {
+            this.type = "json_object";
+        }
+
+        public ResponseFormat(String type) {
+            this.type = type;
+        }
     }
 
 }

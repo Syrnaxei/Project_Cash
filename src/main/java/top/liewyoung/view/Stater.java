@@ -6,6 +6,12 @@ import top.liewyoung.view.mainWindows.MapDraw;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ *
+ * @author LiewYoung
+ * @since 2025/12/19
+ */
 public class Stater {
     public static MapDraw map;
     public static void main(String[] args) {

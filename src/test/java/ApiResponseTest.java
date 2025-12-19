@@ -15,6 +15,7 @@ public class ApiResponseTest {
         Requests chat = new Requests(url, ConfigLoader.getValue("apiKey"));
         ChatRequest user1 = new ChatRequest("deepseek-chat", false);
         ObjectMapper mapper = new ObjectMapper();
+        user1.addMessage(new Message(Role.SYSTEM, "You are a helpful assistant.你必须以json格式输出在content字段"));
         user1.addMessage(new Message(Role.USER, "Hello"));
 
         try {

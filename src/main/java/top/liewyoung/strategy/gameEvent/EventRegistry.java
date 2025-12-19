@@ -24,6 +24,8 @@ public class EventRegistry {
 
     /**
      * 注册单个事件
+     *
+     * @param event 活动
      */
     public void register(GameEvent event) {
         TitlesTypes type = event.getType();
@@ -34,6 +36,7 @@ public class EventRegistry {
 
     /**
      * 批量注册事件
+     * 多参数 可变参数
      */
     public void registerAll(GameEvent... eventList) {
         for (GameEvent event : eventList) {
