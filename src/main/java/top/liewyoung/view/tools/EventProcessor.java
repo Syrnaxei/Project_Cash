@@ -24,7 +24,7 @@ public class EventProcessor {
     public EventProcessor(Player player) {
         this.context = new EventContext(player);
         this.registry = new EventRegistry();
-        DefaultEventConfig. registerAll(registry);
+        DefaultEventConfig.registerAll(registry);
     }
 
     public EventProcessor(Player player, boolean testMode) {
