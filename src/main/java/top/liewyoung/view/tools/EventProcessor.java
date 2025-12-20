@@ -11,6 +11,7 @@ import top.liewyoung.view.component.MDialog.MessageType;
  * EventProcessor
  * 事件处理器 - 处理玩家走到不同格子上的事件
  * 使用事件注册表自动管理所有事件
+ * <b>准确来说这个类已经弃用了但是由于不确定性保留了</b>
  *
  * @author LiewYoung
  * @since 2025/12/17

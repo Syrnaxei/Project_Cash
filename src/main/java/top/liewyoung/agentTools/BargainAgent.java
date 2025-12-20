@@ -2,7 +2,7 @@ package top.liewyoung.agentTools;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import top.liewyoung.config.ConfigLoader;
+import top.liewyoung.config.ConfigLoaderKt;
 import top.liewyoung.network.Requests;
 import top.liewyoung.network.response.ChatResponse;
 
@@ -49,9 +49,9 @@ public class BargainAgent {
             """;
 
     public BargainAgent() {
-        String apiUrl = ConfigLoader.getValue("deepseek.api.url");
-        String apiKey = ConfigLoader.getValue("apiKey");
-        String model = ConfigLoader.getValue("model");
+        String apiUrl = ConfigLoaderKt.getValue("deepseek.api.url");
+        String apiKey = ConfigLoaderKt.getValue("apiKey");
+        String model = ConfigLoaderKt.getValue("model");
 
         // 使用默认值
         if (apiUrl == null)
@@ -149,7 +149,7 @@ public class BargainAgent {
      * 重置对话（开始新的砍价）
      */
     public void reset() {
-        String model = ConfigLoader.getValue("deepseek.model");
+        String model = ConfigLoaderKt.getValue("deepseek.model");
         if (model == null)
             model = "deepseek-chat";
 

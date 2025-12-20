@@ -19,10 +19,12 @@ import top.liewyoung.view.component.MDialog;
 import top.liewyoung.view.tools.EventProcessor;
 
 /**
+ *
  * @author LiewYoung
  * @since 2025/12/14
  */
-// 简单的字体记录类
+
+
 record FontSize(int title, int heavy, int normal) {
 }
 

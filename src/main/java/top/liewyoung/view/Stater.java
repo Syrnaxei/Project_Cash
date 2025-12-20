@@ -16,6 +16,7 @@ public class Stater {
     public static MapDraw map;
     public static void main(String[] args) {
         JFrame frame = new JFrame();
+        frame.setTitle("CashFlow");
         frame.setLayout(new BorderLayout());
         map = new MapDraw();
         map.setBackground(new Color(253, 253, 245));

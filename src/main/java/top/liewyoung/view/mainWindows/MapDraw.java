@@ -136,7 +136,7 @@ public class MapDraw extends JPanel {
 
     
     
-    // ==================== 公共方法 ====================
+
     
     /**
      * 开始骰子滚动动画
@@ -335,7 +335,7 @@ public class MapDraw extends JPanel {
     }
     
     
-    // ==================== 绘制方法 ====================
+
     
     @Override
     protected void paintComponent(Graphics g) {
@@ -545,7 +545,7 @@ public class MapDraw extends JPanel {
     }
     
     
-    // ==================== 计算方法 ====================
+
     
     /**
      * 计算并生成所有方块
@@ -715,7 +715,7 @@ public class MapDraw extends JPanel {
     }
     
     
-    // ==================== 内部类 ====================
+
     
     /**
      * 玩家位置类

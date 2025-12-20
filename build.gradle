@@ -1,35 +1,41 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.kotlin.jvm'
-
+    id 'org.jetbrains.kotlin.jvm' version '1.9.20'
+    id 'org.jetbrains.compose' version '1.5.11'
 }
 
 group = 'top.liewyoung'
 version = '1.0-SNAPSHOT'
 
-//application {
-  //  mainClass = 'Main'
-//}
-
 repositories {
     mavenCentral()
+    // Compose 桌面版专用的仓库
+    maven { url "https://maven.pkg.jetbrains.space/public/p/compose/interactive" }
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // 1. 基础工具类
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation "com.formdev:flatlaf:3.7"
-}
 
-test {
-    useJUnitPlatform()
+    // 2. Kotlin JVM 标准库 (非 Android 版)
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+
+    // 3. Compose Desktop 核心 (这才是你需要的)
+    // 它会自动引入适合 Windows/macOS/Linux 的渲染引擎 Skiko
+    implementation compose.desktop.currentOs
+    implementation compose.material3
 }
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// 桌面运行配置
+compose.desktop {
+    application {
+        mainClass = "top.liewyoung.Main"
     }
 }

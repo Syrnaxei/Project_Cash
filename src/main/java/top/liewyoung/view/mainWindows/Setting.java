@@ -78,7 +78,15 @@ public class Setting extends JPanel {
         add(listPanel);
     }
 
-    //工厂方法产生卡片
+
+    /**
+     * 卡片工厂
+     *
+     * @param name 名称
+     * @param desc 描述
+     * @param icon 图标
+     * @return {@link JPanel }
+     */
     private JPanel cardFactory(String name, String desc, ImageIcon icon) {
         CircleImageLabel circleImageLabel = new CircleImageLabel(icon, 100);
 

@@ -53,7 +53,7 @@ public class HomePage extends JFrame {
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
         listPanel.setBackground(palette.surface());
 
-        JLabel explanation = new JLabel("CashFlow是一款基于JavaSwing的桌面游戏，游戏内容由两名作者开发，游戏内容基于《Cash Flow》游戏。");
+        JLabel explanation = new JLabel("CashFlow是一款基于JavaSwing的桌面游戏，游戏内容由多名作者开发，游戏内容基于《Cash Flow》游戏。");
         explanation.setFont(new Font("微软雅黑", Font.PLAIN, 16));
         explanation.setForeground(palette.onSurface());
 

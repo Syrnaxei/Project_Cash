@@ -35,9 +35,6 @@ public record MaterialPalette(
         Color error
 ) {
 
-    // ==========================================
-    // 预设主题 1: Moss Green (苔藓绿 )
-    // ==========================================
     public static final MaterialPalette MOSS = new MaterialPalette(
             new Color(56, 106, 32),      // primary (深绿)
             new Color(255, 255, 255),    // onPrimary (白)
@@ -50,9 +47,7 @@ public record MaterialPalette(
             new Color(186, 26, 26)       // error (深红)
     );
 
-    // ==========================================
-    // 预设主题 2: Deep Purple (Google 默认风格)
-    // ==========================================
+
     public static final MaterialPalette PURPLE = new MaterialPalette(
             new Color(103, 80, 164),     // primary (紫色)
             new Color(255, 255, 255),    // onPrimary
