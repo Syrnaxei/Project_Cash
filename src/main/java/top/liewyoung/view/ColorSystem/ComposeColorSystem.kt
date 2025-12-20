@@ -5,12 +5,16 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+/**
+ * 扩展函数转换颜色
+ * @return [Color]
+ */
 private fun java.awt.Color.toComposeColor(): Color {
     return Color(this.rgb)
 }
 
 
-
+/**配色方案 */
 private val MColorScheme = lightColorScheme(
     primary = MaterialPalette.MOSS.primary.toComposeColor(),
     onPrimary = MaterialPalette.MOSS.onPrimary.toComposeColor(),
@@ -23,6 +27,10 @@ private val MColorScheme = lightColorScheme(
 )
 
 
+/**
+ * 应用主题
+ * @param [content] 内容
+ */
 @Composable
 fun AppTheme( content: @Composable () -> Unit) {
     MaterialTheme(

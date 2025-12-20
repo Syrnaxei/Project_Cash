@@ -16,7 +16,7 @@ fun getValue(key: String): String {
     try {
         val prop = Properties();
         prop.load(FileInputStream(configPath))
-        return prop.getProperty(key)
+        return prop.getProperty(key)?: ""
     }catch (e : IOException){
         println(e.message)
         return ""

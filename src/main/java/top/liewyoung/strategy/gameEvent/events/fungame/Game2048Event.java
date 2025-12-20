@@ -37,17 +37,14 @@ public class Game2048Event implements GameEvent {
         }
 
         isRunning = true;
-        Game2048.start(new Game2048Listener() {
-            @Override
-            public void onGameEnd(int finalScore) {
-                isRunning = false;
-                ctx.addCash(finalScore);
-                ctx.showMessage(
-                        String.format("2048 游戏结束！\n得分：%d\n当前现金：%d元", finalScore, ctx.getCash()),
-                        "2048 结束",
-                        MessageType.INFO);
-                ctx.refreshUI();
-            }
+        Game2048.start(finalScore -> {
+            isRunning = false;
+            ctx.addCash(finalScore);
+            ctx.showMessage(
+                    String.format("2048 游戏结束！\n得分：%d\n当前现金：%d元", finalScore, ctx.getCash()),
+                    "2048 结束",
+                    MessageType.INFO);
+            ctx.refreshUI();
         });
     }
 

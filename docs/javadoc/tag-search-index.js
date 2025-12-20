@@ -1,1 +1,0 @@
-tagSearchIndex = [{"l":"常量字段值","h":"","u":"constant-values.html"},{"l":"解释","h":"接口 top.liewyoung.strategy.gameEvent.Event","d":"节","u":"top/liewyoung/strategy/gameEvent/Event.html#--heading"},{"l":"序列化表格","h":"","u":"serialized-form.html"}];updateSearchResults();

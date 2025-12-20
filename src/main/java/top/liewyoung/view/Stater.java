@@ -21,7 +21,7 @@ public class Stater {
         map = new MapDraw();
         map.setBackground(new Color(253, 253, 245));
         frame.add(map, BorderLayout.CENTER);
-        frame.add(new DashboardPanel(map), BorderLayout.EAST);
+        frame.add(new DashboardPanel(map,frame), BorderLayout.EAST);
         frame.setBackground(new Color(253, 253, 245));
         frame.setSize(1200, 835);
         frame.setLocation(300, 100);

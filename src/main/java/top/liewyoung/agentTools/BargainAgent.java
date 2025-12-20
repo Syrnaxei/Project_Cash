@@ -149,7 +149,7 @@ public class BargainAgent {
      * 重置对话（开始新的砍价）
      */
     public void reset() {
-        String model = ConfigLoaderKt.getValue("deepseek.model");
+        String model = ConfigLoaderKt.getValue("model");
         if (model == null)
             model = "deepseek-chat";
 
@@ -161,6 +161,7 @@ public class BargainAgent {
 
     public static void main(String[] args) {
         BargainAgent agent = new BargainAgent();
+        agent.reset();
         System.out.println(agent.bargain("我是一个老客户，信用记录好"));
     }
 }

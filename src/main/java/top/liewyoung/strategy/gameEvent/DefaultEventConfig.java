@@ -46,12 +46,12 @@ public class DefaultEventConfig {
 
         // 银行事件
         registry.registerAll(
-                new DepositEvent(),
+                /*new DepositEvent(),
                 new WithdrawEvent(),
                 new LoanEvent(),
-                new RepaymentEvent(),
+                new RepaymentEvent(),*/
                 new BargainEvent()
-        ); // AI砍价事件
+        );
 
 
         // 趣味游戏事件

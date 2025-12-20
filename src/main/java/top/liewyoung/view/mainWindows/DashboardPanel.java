@@ -14,6 +14,7 @@ import org.atom.Player;
 import top.liewyoung.strategy.asset.Asset;
 import top.liewyoung.strategy.MapPostition;
 import top.liewyoung.strategy.TitlesTypes;
+import top.liewyoung.view.Stater;
 import top.liewyoung.view.component.MDbutton;
 import top.liewyoung.view.component.MDialog;
 import top.liewyoung.view.tools.EventProcessor;
@@ -62,8 +63,10 @@ public class DashboardPanel extends JPanel {
     private EventProcessor eventProcessor;
 
     private static int lastDice = 0;
+    private final JFrame mainframe;
 
-    public DashboardPanel(MapDraw map) {
+    public DashboardPanel(MapDraw map,JFrame mainframe) {
+        this.mainframe = mainframe;
         setPreferredSize(new Dimension(300, getHeight()));
         this.map = map;
         // 全局设置
@@ -123,6 +126,7 @@ public class DashboardPanel extends JPanel {
     public void diceEvent() {
         DashboardPanel.lastDice = dice.nextInt(1, 7);
 
+
         // 先触发骰子滚动动画
         map.rollDice(DashboardPanel.lastDice, () -> {
             // 动画完成后执行后续逻辑
@@ -134,22 +138,17 @@ public class DashboardPanel extends JPanel {
                     mapPostition.mapOrder.get(playerPosition).x(),
                     mapPostition.mapOrder.get(playerPosition).y());
 
-            String type = currentType.name();
-            MDialog dialog = new MDialog(
-                    "你摇出了 " + DashboardPanel.lastDice + " 类型：" + type,
-                    "我知道了");
+
 
             map.updatePlayerPosition(
                     mapPostition.mapOrder.get(playerPosition).x(),
                     mapPostition.mapOrder.get(playerPosition).y());
 
-            dialog.setLocationRelativeTo(this);
-            dialog.setAlwaysOnTop(true);
-            dialog.setModal(true);
-            dialog.setVisible(true);
+
 
             // 触发事件处理
-            if (eventProcessor != null) {
+            if (eventProcessor != null && !gameOver(currentPlayer)) {
+                currentPlayer.setCash(0);
                 // 更新所有资产价值（每次骰子后）
                 currentPlayer.getAssetManager().updateAllAssets(dice);
                 eventProcessor.processEvent(currentType);
@@ -199,6 +198,24 @@ public class DashboardPanel extends JPanel {
     private JButton buttonFactory(String text) {
         JButton Button = new MDbutton(text);
         return Button;
+    }
+
+    /**
+     * 游戏结束
+     *
+     * @param player
+     */
+    private boolean gameOver(Player player) {
+        if(player.getCash() <= 0) {
+            mainframe.dispose();
+            MDialog dialog = new MDialog("游戏结束", "重新开始");
+            dialog.setVisible(true);
+            SwingUtilities.invokeLater(() -> {
+                Stater.main(null);
+            });
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -252,6 +269,8 @@ public class DashboardPanel extends JPanel {
             g2.setColor(getBackground());
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), 24, 24); // 24px 圆角
         }
+
+
 
         private JLabel createInfoLabel(String text) {
             JLabel label = new JLabel(text);
