@@ -25,6 +25,7 @@ public class Stater {
         frame.setBackground(new Color(253, 253, 245));
         frame.setSize(1200, 835);
         frame.setLocation(300, 100);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setResizable(false);
         frame.setVisible(true);

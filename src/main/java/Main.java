@@ -1,7 +1,4 @@
-import com.formdev.flatlaf.FlatLightLaf;
-import top.liewyoung.view.mainWindows.HomePage;
-
-import javax.swing.*;
+import top.liewyoung.view.mainWindows.HomePageComposeKt;
 
 /**
  * 主入口类 - 启动 CashFlow 游戏
@@ -11,13 +8,7 @@ import javax.swing.*;
  */
 public class Main {
     public static void main(String[] args) {
-        FlatLightLaf.setup();
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new HomePage();
-            }
-        });
+        // 使用 Compose 版本的 HomePage
+        HomePageComposeKt.main();
     }
 }
