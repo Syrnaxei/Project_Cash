@@ -26,8 +26,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.formdev.flatlaf.FlatLightLaf
+import org.atom.Player
+import top.liewyoung.thanos.getCodePanel
+import top.liewyoung.thanos.getEngine
 import top.liewyoung.view.ColorSystem.AppTheme
 import top.liewyoung.view.Stater
+import top.liewyoung.view.component.MDialog
 import top.liewyoung.view.displayFonts.sharpSans
 import javax.swing.JFrame
 import javax.swing.SwingUtilities
@@ -37,7 +41,7 @@ import javax.swing.SwingUtilities
  * 获取关于面板
  * @return [ComposePanel]
  */
-fun getAboutPanel(): ComposePanel {
+fun getAboutPanel(player: Player): ComposePanel {
     return ComposePanel().apply {
         setContent {
             AppTheme {
@@ -48,7 +52,7 @@ fun getAboutPanel(): ComposePanel {
                 ) {
 
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(16.dp) ,
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text("关于", fontWeight = FontWeight.Bold, fontSize = 32.sp)
@@ -70,7 +74,32 @@ fun getAboutPanel(): ComposePanel {
                             icon = painterResource("Avstar_2.jpg")
                         )
 
-                        Button(content = {Text("刷新地图", fontWeight = FontWeight.Medium)}, onClick = { Stater.map.refreshMap()})
+                        Row {
+                            Button(
+                                content = { Text("刷新地图", fontWeight = FontWeight.Medium) },
+                                onClick = { Stater.map.refreshMap() })
+
+                            Spacer(modifier = Modifier.size(16.dp))
+
+                            Button(
+                                content = { Text("开启控制台", fontWeight = FontWeight.Medium)},
+                                onClick = {
+                                    SwingUtilities.invokeLater {
+                                        val frame = JFrame("控制台")
+                                        val dialog = MDialog ("提示","由于引擎问题打开会耗时，请耐心等待", MDialog.MessageType.INFO)
+                                        dialog.isVisible = true
+                                        val engine = getEngine()
+                                        engine.inject("player", player)
+                                        frame.add(getCodePanel(engine))
+                                        frame.setSize(800, 600)
+                                        frame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
+                                        frame.isVisible = true
+                                    }
+                                }
+                            )
+
+                        }
+
 
                     }
 
@@ -89,33 +118,23 @@ fun getAboutPanel(): ComposePanel {
  * @param [icon] 图标
  */
 @Composable
-fun cardFactory(name: String,
-                desc: String = "North China University of Water Resources and Electric Power",
-                icon: Painter){
+fun cardFactory(
+    name: String,
+    desc: String = "North China University of Water Resources and Electric Power",
+    icon: Painter
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Image(painter = icon, contentDescription = null, modifier = Modifier.size(64.dp).clip(CircleShape))
-        Column (
+        Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start
-        ){
+        ) {
             Text(name, fontWeight = FontWeight.Bold, fontSize = 24.sp, fontFamily = sharpSans)
-            Text(desc, fontWeight = FontWeight.Medium,fontSize = 16.sp, fontFamily = sharpSans)
+            Text(desc, fontWeight = FontWeight.Medium, fontSize = 16.sp, fontFamily = sharpSans)
         }
     }
 }
 
-fun main() {
-    val frame = JFrame("Compose 测试窗口")
-    FlatLightLaf.setup()
-    SwingUtilities.invokeLater {
-        frame.add(getAboutPanel())
-        frame.setSize(1200, 850)
-        frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-        frame.setLocationRelativeTo(null)
-        frame.isVisible = true
-        println("启动成功")
-    }
-}

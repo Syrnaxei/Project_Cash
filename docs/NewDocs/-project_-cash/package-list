@@ -82,7 +82,6 @@ $dokka.location:com.syrnaxei.game.gameVF.core/Target/y/#/PointingToDeclaration/
 $dokka.location:com.syrnaxei.game.gameVF.gui////PointingToDeclaration/-project_-cash/com.syrnaxei.game.gameVF.gui/index.html
 $dokka.location:com.syrnaxei.game.gameVF.gui/GameGUI///PointingToDeclaration/-project_-cash/com.syrnaxei.game.gameVF.gui/-game-g-u-i/index.html
 $dokka.location:com.syrnaxei.game.gameVF.gui/GameGUI/GameGUI/#/PointingToDeclaration/-project_-cash/com.syrnaxei.game.gameVF.gui/-game-g-u-i/-game-g-u-i.html
-$dokka.location:com.syrnaxei.game.gameVF.gui/GameGUI/gameFrame/#/PointingToDeclaration/-project_-cash/com.syrnaxei.game.gameVF.gui/-game-g-u-i/game-frame.html
 $dokka.location:com.syrnaxei.game.gameVF.gui/GameGUI/gamePanel/#/PointingToDeclaration/-project_-cash/com.syrnaxei.game.gameVF.gui/-game-g-u-i/game-panel.html
 $dokka.location:com.syrnaxei.game.gameVF.gui/GameMain///PointingToDeclaration/-project_-cash/com.syrnaxei.game.gameVF.gui/-game-main/index.html
 $dokka.location:com.syrnaxei.game.gameVF.gui/GameMain/GameMain/#/PointingToDeclaration/-project_-cash/com.syrnaxei.game.gameVF.gui/-game-main/-game-main.html
@@ -139,14 +138,11 @@ $dokka.location:top.liewyoung.agentTools.Exceptions////PointingToDeclaration/-p
 $dokka.location:top.liewyoung.agentTools.Exceptions/RoleInvalid///PointingToDeclaration/-project_-cash/top.liewyoung.agentTools.Exceptions/-role-invalid/index.html
 $dokka.location:top.liewyoung.agentTools.Exceptions/RoleInvalid/RoleInvalid/#java.lang.String/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools.Exceptions/-role-invalid/-role-invalid.html
 $dokka.location:top.liewyoung.agentTools////PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/index.html
-$dokka.location:top.liewyoung.agentTools/Agent///PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent/index.html
-$dokka.location:top.liewyoung.agentTools/Agent/Agent/#java.lang.String#top.liewyoung.agentTools.Career/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent/-agent.html
-$dokka.location:top.liewyoung.agentTools/Agent/Ask/#top.liewyoung.agentTools.QuestionLevel/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent/-ask.html
-$dokka.location:top.liewyoung.agentTools/Agent/response/#java.lang.String/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent/response.html
-$dokka.location:top.liewyoung.agentTools/Agent/toString/#/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent/to-string.html
 $dokka.location:top.liewyoung.agentTools/AgentDo///PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent-do/index.html
-$dokka.location:top.liewyoung.agentTools/AgentDo/Ask/#top.liewyoung.agentTools.QuestionLevel/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent-do/-ask.html
-$dokka.location:top.liewyoung.agentTools/AgentDo/response/#java.lang.String/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent-do/response.html
+$dokka.location:top.liewyoung.agentTools/AgentDo/getCurrentRound/#/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent-do/get-current-round.html
+$dokka.location:top.liewyoung.agentTools/AgentDo/getMaxRounds/#/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent-do/get-max-rounds.html
+$dokka.location:top.liewyoung.agentTools/AgentDo/isAgreed/#/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent-do/is-agreed.html
+$dokka.location:top.liewyoung.agentTools/AgentDo/reset/#/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-agent-do/reset.html
 $dokka.location:top.liewyoung.agentTools/BargainAgent.JsonResponse///PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-bargain-agent/-json-response/index.html
 $dokka.location:top.liewyoung.agentTools/BargainAgent.JsonResponse/JsonResponse/#/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-bargain-agent/-json-response/-json-response.html
 $dokka.location:top.liewyoung.agentTools/BargainAgent.JsonResponse/content/#/PointingToDeclaration/-project_-cash/top.liewyoung.agentTools/-bargain-agent/-json-response/content.html
@@ -501,6 +497,15 @@ $dokka.location:top.liewyoung.strategy/TitlesTypes.START///PointingToDeclaration
 $dokka.location:top.liewyoung.strategy/TitlesTypes///PointingToDeclaration/-project_-cash/top.liewyoung.strategy/-titles-types/index.html
 $dokka.location:top.liewyoung.strategy/TitlesTypes/valueOf/#java.lang.String/PointingToDeclaration/-project_-cash/top.liewyoung.strategy/-titles-types/value-of.html
 $dokka.location:top.liewyoung.strategy/TitlesTypes/values/#/PointingToDeclaration/-project_-cash/top.liewyoung.strategy/-titles-types/values.html
+$dokka.location:top.liewyoung.thanos////PointingToDeclaration/-project_-cash/top.liewyoung.thanos/index.html
+$dokka.location:top.liewyoung.thanos//PythonConsoleApp/#top.liewyoung.thanos.Python3Engine/PointingToDeclaration/-project_-cash/top.liewyoung.thanos/-python-console-app.html
+$dokka.location:top.liewyoung.thanos//getCodePanel/#/PointingToDeclaration/-project_-cash/top.liewyoung.thanos/get-code-panel.html
+$dokka.location:top.liewyoung.thanos//main/#/PointingToDeclaration/-project_-cash/top.liewyoung.thanos/main.html
+$dokka.location:top.liewyoung.thanos/Python3Engine///PointingToDeclaration/-project_-cash/top.liewyoung.thanos/-python3-engine/index.html
+$dokka.location:top.liewyoung.thanos/Python3Engine/Python3Engine/#/PointingToDeclaration/-project_-cash/top.liewyoung.thanos/-python3-engine/-python3-engine.html
+$dokka.location:top.liewyoung.thanos/Python3Engine/execute/#kotlin.String/PointingToDeclaration/-project_-cash/top.liewyoung.thanos/-python3-engine/execute.html
+$dokka.location:top.liewyoung.thanos/Python3Engine/inject/#kotlin.String#kotlin.Any/PointingToDeclaration/-project_-cash/top.liewyoung.thanos/-python3-engine/inject.html
+$dokka.location:top.liewyoung.thanos/Python3Engine/restart/#/PointingToDeclaration/-project_-cash/top.liewyoung.thanos/-python3-engine/restart.html
 $dokka.location:top.liewyoung.view.ColorSystem////PointingToDeclaration/-project_-cash/top.liewyoung.view.ColorSystem/index.html
 $dokka.location:top.liewyoung.view.ColorSystem//AppTheme/#kotlin.Function0[kotlin.Unit]/PointingToDeclaration/-project_-cash/top.liewyoung.view.ColorSystem/-app-theme.html
 $dokka.location:top.liewyoung.view.ColorSystem/MaterialPalette///PointingToDeclaration/-project_-cash/top.liewyoung.view.ColorSystem/-material-palette/index.html
@@ -533,9 +538,14 @@ $dokka.location:top.liewyoung.view.component/MDialog/selectedOption/#/PointingTo
 $dokka.location:top.liewyoung.view.component/MDialog/showInputDialog/#java.awt.Component#java.lang.String#java.lang.String#top.liewyoung.view.component.MDialog.MessageType/PointingToDeclaration/-project_-cash/top.liewyoung.view.component/-m-dialog/show-input-dialog.html
 $dokka.location:top.liewyoung.view.component/MDialog/showMessageDialog/#java.awt.Component#java.lang.String#java.lang.String#top.liewyoung.view.component.MDialog.MessageType/PointingToDeclaration/-project_-cash/top.liewyoung.view.component/-m-dialog/show-message-dialog.html
 $dokka.location:top.liewyoung.view.component/MDialog/showOptionDialog/#java.awt.Component#java.lang.String#java.lang.String#java.lang.String[]#top.liewyoung.view.component.MDialog.MessageType/PointingToDeclaration/-project_-cash/top.liewyoung.view.component/-m-dialog/show-option-dialog.html
+$dokka.location:top.liewyoung.view.displayFonts////PointingToDeclaration/-project_-cash/top.liewyoung.view.displayFonts/index.html
+$dokka.location:top.liewyoung.view.displayFonts//sharpSans/#/PointingToDeclaration/-project_-cash/top.liewyoung.view.displayFonts/sharp-sans.html
 $dokka.location:top.liewyoung.view.mainWindows////PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/index.html
+$dokka.location:top.liewyoung.view.mainWindows//cardFactory/#kotlin.String#kotlin.String#androidx.compose.ui.graphics.painter.Painter/PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/card-factory.html
+$dokka.location:top.liewyoung.view.mainWindows//getAboutPanel/#/PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/get-about-panel.html
 $dokka.location:top.liewyoung.view.mainWindows//getHomePanel/#javax.swing.JFrame/PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/get-home-panel.html
-$dokka.location:top.liewyoung.view.mainWindows//main/#/PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/main.html
+$dokka.location:top.liewyoung.view.mainWindows//main/#/PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/[jvm]main.html
+$dokka.location:top.liewyoung.view.mainWindows//poems/#/PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/poems.html
 $dokka.location:top.liewyoung.view.mainWindows/DashboardPanel///PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/-dashboard-panel/index.html
 $dokka.location:top.liewyoung.view.mainWindows/DashboardPanel/DashboardPanel/#top.liewyoung.view.mainWindows.MapDraw#javax.swing.JFrame/PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/-dashboard-panel/-dashboard-panel.html
 $dokka.location:top.liewyoung.view.mainWindows/DashboardPanel/addProperty/#java.lang.String#java.lang.String#java.lang.String#java.lang.String/PointingToDeclaration/-project_-cash/top.liewyoung.view.mainWindows/-dashboard-panel/add-property.html
@@ -570,8 +580,6 @@ $dokka.location:top.liewyoung.view.tools/EventProcessor/setTestMode/#boolean/Poi
 $dokka.location:top.liewyoung.view.tools/EventProcessor/setUiRefreshCallback/#java.lang.Runnable/PointingToDeclaration/-project_-cash/top.liewyoung.view.tools/-event-processor/set-ui-refresh-callback.html
 $dokka.location:top.liewyoung.view.tools/EventProcessor/unregisterEvent/#top.liewyoung.strategy.gameEvent.GameEvent/PointingToDeclaration/-project_-cash/top.liewyoung.view.tools/-event-processor/unregister-event.html
 $dokka.location:top.liewyoung.view////PointingToDeclaration/-project_-cash/top.liewyoung.view/index.html
-$dokka.location:top.liewyoung.view//getPanel/#/PointingToDeclaration/-project_-cash/top.liewyoung.view/get-panel.html
-$dokka.location:top.liewyoung.view//main/#/PointingToDeclaration/-project_-cash/top.liewyoung.view/main.html
 $dokka.location:top.liewyoung.view/Stater///PointingToDeclaration/-project_-cash/top.liewyoung.view/-stater/index.html
 $dokka.location:top.liewyoung.view/Stater/Stater/#/PointingToDeclaration/-project_-cash/top.liewyoung.view/-stater/-stater.html
 $dokka.location:top.liewyoung.view/Stater/main/#java.lang.String[]/PointingToDeclaration/-project_-cash/top.liewyoung.view/-stater/main.html
@@ -600,9 +608,11 @@ top.liewyoung.strategy.gameEvent.events.fate
 top.liewyoung.strategy.gameEvent.events.fungame
 top.liewyoung.strategy.gameEvent.events.market
 top.liewyoung.strategy.gameEvent.events.opportunity
+top.liewyoung.thanos
 top.liewyoung.view
 top.liewyoung.view.ColorSystem
 top.liewyoung.view.component
+top.liewyoung.view.displayFonts
 top.liewyoung.view.mainWindows
 top.liewyoung.view.tools
 

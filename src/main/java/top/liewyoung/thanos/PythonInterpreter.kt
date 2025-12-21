@@ -29,6 +29,12 @@ import javax.swing.JFrame
 import javax.swing.SwingUtilities
 
 
+/**
+ * Python 3 控制台
+ *
+ *@author LiewYoung
+ *@since 2025/12/21
+ */
 class Python3Engine {
     private val outputStream = ByteArrayOutputStream()
 
@@ -43,10 +49,16 @@ class Python3Engine {
             .allowHostAccess(HostAccess.ALL) // 允许访问被 @HostAccess.Export 标记的 Java 方法
             .allowIO(false)         // 禁止文件 IO (安全沙箱)
             .allowCreateThread(false) // 禁止创建线程
+            .allowCreateProcess(false) // 不允许创建进程 （超标）
             .build()
     }
 
 
+    /**
+     * 执行
+     * @param [code] 代码
+     * @return [String] 执行结果
+     */
     fun execute(code: String): String {
         outputStream.reset()
         return try {
@@ -59,16 +71,29 @@ class Python3Engine {
         }
     }
 
+    /**
+     * 注入
+     * @param [name] 对象名
+     * @param [obj] 对象
+     */
     fun inject(name: String, obj: Any) {
         context?.getBindings("python")?.putMember(name, obj)
     }
 
+    /**
+     * 请在开始时调用
+     */
     fun restart() {
         initContext()
         outputStream.reset()
     }
 }
 
+/**
+ *Compose 元素
+ *
+ * @param [engine] 解释器
+ */
 @Composable
 fun PythonConsoleApp(engine: Python3Engine) {
     var inputText by remember { mutableStateOf("") }
@@ -168,9 +193,13 @@ fun PythonConsoleApp(engine: Python3Engine) {
     }
 }
 
-fun getCodePanel(): ComposePanel {
-    val engine = Python3Engine()
-    engine.restart()
+/**
+ * 产生一个 ComposePanel 和 Swing 配合
+ * @param [engine] 引擎
+ * @return [ComposePanel]
+ */
+fun getCodePanel(engine: Python3Engine): ComposePanel {
+
     return ComposePanel().apply {
         setContent {
             Surface {
@@ -178,6 +207,18 @@ fun getCodePanel(): ComposePanel {
             }
         }
     }
+}
+
+
+/**
+ * 获取引擎
+ * @return [Python3Engine]
+ */
+fun getEngine(): Python3Engine {
+    val engine = Python3Engine()
+    engine.restart()
+    engine.inject("Egg", EasterEgg())
+    return engine
 }
 
 fun main() {
@@ -188,7 +229,7 @@ fun main() {
         val frame = JFrame("Thanos - Python 3 Console")
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         frame.setSize(900, 700)
-        frame.setContentPane(getCodePanel())
+        frame.setContentPane(getCodePanel(getEngine()))
         frame.setLocationRelativeTo(null)
         frame.isVisible = true
     }
