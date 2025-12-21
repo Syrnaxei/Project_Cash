@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposePanel
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.*
 import androidx.compose.ui.text.TextStyle
@@ -73,6 +74,7 @@ fun PythonConsoleApp(engine: Python3Engine) {
     var inputText by remember { mutableStateOf("") }
     val history = remember { mutableStateListOf<Pair<String, String>>() }
     val listState = rememberLazyListState()
+    val colorList = listOf<Color>(Color(0xFF7d45f8), Color(0xFFd113ec))
 
 
     LaunchedEffect(history.size) {
@@ -89,9 +91,12 @@ fun PythonConsoleApp(engine: Python3Engine) {
     ) {
         Text(
             "THANOS PYTHON 3 控制台",
-            color = Color(0xFF00E676),
-            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFF7d45f8),
             fontSize = 16.sp,
+            style = TextStyle(
+                brush = Brush.linearGradient(colorList),
+                fontWeight = FontWeight.Bold
+            ),
             modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(
@@ -131,7 +136,7 @@ fun PythonConsoleApp(engine: Python3Engine) {
                 .background(Color.Black)
                 .padding(10.dp)
         ) {
-            Text(">>> ", color = Color(0xFF00E676), fontFamily = FontFamily.Monospace)
+            Text(">>> ", color = colorList[1], fontFamily = FontFamily.Monospace)
             BasicTextField(
                 value = inputText,
                 onValueChange = { inputText = it },
@@ -157,7 +162,7 @@ fun PythonConsoleApp(engine: Python3Engine) {
                     fontFamily = FontFamily.Monospace,
                     fontSize = 14.sp
                 ),
-                cursorBrush = androidx.compose.ui.graphics.SolidColor(Color(0xFF00E676))
+                cursorBrush = androidx.compose.ui.graphics.SolidColor(colorList[0])
             )
         }
     }
@@ -165,7 +170,7 @@ fun PythonConsoleApp(engine: Python3Engine) {
 
 fun getCodePanel(): ComposePanel {
     val engine = Python3Engine()
-
+    engine.restart()
     return ComposePanel().apply {
         setContent {
             Surface {
