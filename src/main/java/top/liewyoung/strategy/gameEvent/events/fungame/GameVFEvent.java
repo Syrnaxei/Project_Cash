@@ -1,12 +1,14 @@
 package top.liewyoung.strategy.gameEvent.events.fungame;
 
 import com.syrnaxei.game.gameVF.api.GameVF;
-import com.syrnaxei.game.gameVF.api.GameVFListener;
 import top.liewyoung.strategy.TitlesTypes;
 import top.liewyoung.strategy.gameEvent.EventContext;
 import top.liewyoung.strategy.gameEvent.GameEvent;
 import top.liewyoung.view.component.MDialog;
 
+/**
+ * VF游戏事件
+ */
 public class GameVFEvent implements GameEvent {
     private static volatile boolean isRunning = false;
 

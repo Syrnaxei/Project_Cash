@@ -12,18 +12,55 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.*;
 
+/**
+ * 2048内置游戏图形界面类
+ *
+ * @author LiewYoung
+ * @since 2025/12/15
+ */
 public class GameGUI extends JFrame {
 
+    /**
+     * 游戏核心逻辑板
+     */
     private final Board board;
+    
+    /**
+     * 合并逻辑处理器
+     */
     private final MergeLogic mergeLogic;
+    
+    /**
+     * 游戏格子面板数组
+     */
     private TilePanel[][] tilePanels;
+    
+    /**
+     * 分数显示标签
+     */
     private JLabel scoreLabel;
+    
+    /**
+     * 倒计时显示标签
+     */
     private JLabel countdownLabel;
+    
+    /**
+     * Swing计时器
+     */
     private javax.swing.Timer swingTimer;
+    
+    /**
+     * 游戏活动状态标志
+     */
     private final AtomicBoolean gameActive = new AtomicBoolean(true);
 
     private static final ImageIcon gameIcon = createGameIcon();
 
+    /**
+     * 创建游戏图标
+     * @return 图标对象，加载失败时返回null
+     */
     private static ImageIcon createGameIcon() {
         try {
             return new ImageIcon(
@@ -37,6 +74,11 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 构造函数，初始化游戏界面
+     * @param board 游戏板对象
+     * @param mergeLogic 合并逻辑对象
+     */
     public GameGUI(Board board, MergeLogic mergeLogic) {
         this.board = board;
         this.mergeLogic = mergeLogic;
@@ -51,6 +93,10 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 初始化用户界面
+     * @throws Exception 初始化过程中可能出现的异常
+     */
     private void initializeUI() throws Exception {
         setTitle("Project_Cash_Game_2048");
         if (gameIcon != null) {
@@ -81,6 +127,10 @@ public class GameGUI extends JFrame {
         pack();
     }
 
+    /**
+     * 创建顶部面板（包含分数和倒计时）
+     * @return 顶部面板
+     */
     private JPanel createTopPanel() {
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 10, 0));
@@ -112,6 +162,10 @@ public class GameGUI extends JFrame {
         return topPanel;
     }
 
+    /**
+     * 创建游戏网格面板
+     * @return 网格面板
+     */
     private JPanel createGridPanel() {
         JPanel gridPanel = new JPanel(
             new GridLayout(GameConfig.BOARD_SIZE, GameConfig.BOARD_SIZE, 10, 10)
@@ -134,6 +188,10 @@ public class GameGUI extends JFrame {
         return gridPanel;
     }
 
+    /**
+     * 创建底部说明面板
+     * @return 底部面板
+     */
     private JPanel createBottomPanel() {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
@@ -145,6 +203,9 @@ public class GameGUI extends JFrame {
         return bottomPanel;
     }
 
+    /**
+     * 设置窗口监听器
+     */
     private void setupWindowListener() {
         addWindowListener(
             new WindowAdapter() {
@@ -156,6 +217,9 @@ public class GameGUI extends JFrame {
         );
     }
 
+    /**
+     * 处理窗口关闭事件
+     */
     private void handleWindowClosing() {
         if (gameActive.get()) {
             int result = JOptionPane.showConfirmDialog(
@@ -174,11 +238,17 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 清理资源并关闭窗口
+     */
     private void cleanupAndClose() {
         board.triggerGameOver(); // 通知游戏结束
         dispose(); // 关闭窗口
     }
 
+    /**
+     * 启动倒计时
+     */
     private void startCountdown() {
         // 确保在EDT中执行
         if (!SwingUtilities.isEventDispatchThread()) {
@@ -190,6 +260,9 @@ public class GameGUI extends JFrame {
         swingTimer.start();
     }
 
+    /**
+     * 更新倒计时
+     */
     private void updateCountdown() {
         if (!gameActive.get()) {
             return;
@@ -204,6 +277,9 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 更新倒计时显示
+     */
     private void updateCountdownDisplay() {
         int seconds = board.getRemainingSeconds();
         countdownLabel.setText(String.valueOf(seconds));
@@ -218,12 +294,18 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 停止倒计时
+     */
     private void stopCountdown() {
         if (swingTimer != null && swingTimer.isRunning()) {
             swingTimer.stop();
         }
     }
 
+    /**
+     * 倒计时结束处理
+     */
     private void onCountdownFinish() {
         SwingUtilities.invokeLater(() -> {
             if (gameActive.get()) {
@@ -234,6 +316,9 @@ public class GameGUI extends JFrame {
         });
     }
 
+    /**
+     * 设置键盘监听器
+     */
     private void setupKeyListener() {
         addKeyListener(
             new KeyAdapter() {
@@ -311,6 +396,9 @@ public class GameGUI extends JFrame {
         requestFocusInWindow();
     }
 
+    /**
+     * 重置游戏
+     */
     private void resetGame() {
         try {
             board.resetBoard();
@@ -324,6 +412,11 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 复制游戏板
+     * @param source 源游戏板
+     * @return 复制的游戏板
+     */
     private int[][] copyBoard(int[][] source) {
         int[][] copy = new int[source.length][source[0].length];
         for (int i = 0; i < source.length; i++) {
@@ -332,6 +425,12 @@ public class GameGUI extends JFrame {
         return copy;
     }
 
+    /**
+     * 比较两个游戏板是否相等
+     * @param board1 第一个游戏板
+     * @param board2 第二个游戏板
+     * @return 是否相等
+     */
     private boolean boardsEqual(int[][] board1, int[][] board2) {
         if (
             board1.length != board2.length ||
@@ -349,6 +448,9 @@ public class GameGUI extends JFrame {
         return true;
     }
 
+    /**
+     * 刷新游戏板显示
+     */
     public void refreshBoard() {
         int[][] currentBoard = board.getBoard();
         for (int i = 0; i < GameConfig.BOARD_SIZE; i++) {
@@ -358,6 +460,9 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 检查游戏是否结束
+     */
     private void checkGameOver() {
         if (board.isGameOver()) {
             SwingUtilities.invokeLater(() -> {
@@ -369,6 +474,11 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 处理游戏错误
+     * @param message 错误信息
+     * @param ex 异常对象
+     */
     private void handleGameError(String message, Exception ex) {
         System.err.println(message + ": " + ex.getMessage());
         ex.printStackTrace();
@@ -383,6 +493,10 @@ public class GameGUI extends JFrame {
         cleanupAndClose();
     }
 
+    /**
+     * 处理初始化错误
+     * @param ex 异常对象
+     */
     private void handleInitializationError(Exception ex) {
         System.err.println("初始化游戏界面失败: " + ex.getMessage());
         ex.printStackTrace();
@@ -397,6 +511,9 @@ public class GameGUI extends JFrame {
         System.exit(1);
     }
 
+    /**
+     * 关闭窗口并清理资源
+     */
     public void dispose() {
         try {
             gameActive.set(false);
@@ -408,15 +525,24 @@ public class GameGUI extends JFrame {
         }
     }
 
+    /**
+     * 游戏格子面板内部类
+     */
     private static class TilePanel extends JPanel {
 
         private static final Color EMPTY_COLOR = new Color(205, 193, 180);
         private JLabel valueLabel;
 
+        /**
+         * 构造函数，初始化格子面板
+         */
         public TilePanel() {
             initializeTile();
         }
 
+        /**
+         * 初始化格子面板
+         */
         private void initializeTile() {
             setLayout(new BorderLayout());
             setBackground(EMPTY_COLOR);
@@ -430,6 +556,10 @@ public class GameGUI extends JFrame {
             add(valueLabel, BorderLayout.CENTER);
         }
 
+        /**
+         * 设置格子的值并更新显示
+         * @param value 格子的数值
+         */
         public void setValue(int value) {
             if (value == 0) {
                 valueLabel.setText("");
@@ -440,6 +570,10 @@ public class GameGUI extends JFrame {
             }
         }
 
+        /**
+         * 根据数值设置格子的颜色
+         * @param value 数值
+         */
         private void setColorByValue(int value) {
             Color bgColor;
             Color fgColor = Color.BLACK;

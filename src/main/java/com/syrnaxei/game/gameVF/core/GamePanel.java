@@ -7,19 +7,62 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 
+/**
+ * VF游戏面板类，负责游戏的主要逻辑和界面绘制
+ *
+ * @author Syrnaxei
+ * @since 2025/12/19
+ */
 public class GamePanel extends JPanel implements Runnable{
+    /**
+     * 游戏线程
+     */
     private Thread gameThread;
+    
+    /**
+     * 游戏运行状态标志
+     */
     private boolean isRunning;
+    
+    /**
+     * 游戏得分
+     */
     private int score;
+    
+    /**
+     * 倒计时时间（秒）
+     */
     private int countdown = 30;
+    
+    /**
+     * 上一秒的时间戳
+     */
     private long lastSecond = 0;
+    
+    /**
+     * 游戏窗口框架
+     */
     private final JFrame gameFrame;
+    
+    /**
+     * 游戏结束回调接口
+     */
     private GameVFListener gameVFListener;
 
+    /**
+     * 随机数生成器
+     */
     Random random = new Random();
 
+    /**
+     * 目标列表
+     */
     private java.util.List<Target> targetList;
 
+    /**
+     * 构造函数，初始化游戏面板
+     * @param gameFrame 游戏窗口框架
+     */
     public GamePanel(JFrame gameFrame) {
         setPreferredSize(new Dimension(GameConfig.WINDOW_WIDTH, GameConfig.WINDOW_HEIGHT));
         setBackground(new Color(249, 239, 245));
@@ -30,6 +73,9 @@ public class GamePanel extends JPanel implements Runnable{
         addMouseListener();
     }
 
+    /**
+     * 添加鼠标监听器
+     */
     private void addMouseListener() {
         // 添加鼠标监听器，但根据游戏状态处理不同逻辑
         addMouseListener(new MouseAdapter() {
@@ -46,6 +92,9 @@ public class GamePanel extends JPanel implements Runnable{
         });
     }
 
+    /**
+     * 开始游戏
+     */
     private void startGame() {
         if (!isRunning) {
             targetList = new java.util.ArrayList<>();
@@ -58,6 +107,9 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    /**
+     * 初始化固定数量的目标
+     */
     private void initFixedTargets() {
         for(int i = 0;i < 5;i++){
             int x = random.nextInt(GameConfig.WINDOW_WIDTH - GameConfig.TARGET_SIZE - 50 + 1) + 50;
@@ -70,6 +122,11 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    /**
+     * 检查鼠标点击是否命中目标
+     * @param mouseX 鼠标X坐标
+     * @param mouseY 鼠标Y坐标
+     */
     private void checkMouseHit(int mouseX, int mouseY) {
         for (Target target : targetList) {
             if (target.isHit(mouseX, mouseY, target.getSize())) {
@@ -92,7 +149,9 @@ public class GamePanel extends JPanel implements Runnable{
         score -= penalty;
     }
 
-    // 更新游戏状态
+    /**
+     * 更新游戏状态
+     */
     private void updateGameState() {
         if (targetList.isEmpty()) {
             if(GameConfig.DEBUG_MODE){
@@ -102,6 +161,9 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    /**
+     * 更新倒计时
+     */
     private void updateCountdown() {
         if (isRunning && countdown > 0) {
             long currentTime = System.currentTimeMillis();
@@ -116,12 +178,17 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
-    // 添加设置回调的方法
+    /**
+     * 设置游戏结束回调
+     * @param callback 回调接口
+     */
     public void setGameOverCallback(GameVFListener callback) {
         this.gameVFListener = callback;
     }
 
-    // 修改 triggerGameOver 方法
+    /**
+     * 触发游戏结束
+     */
     public void triggerGameOver(){
         isRunning = false;
         // 触发回调
@@ -131,9 +198,10 @@ public class GamePanel extends JPanel implements Runnable{
         gameFrame.dispose();
     }
 
-
-
-    // 绘制游戏（被run()调用）
+    /**
+     * 绘制游戏界面
+     * @param g 图形对象
+     */
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -147,6 +215,10 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    /**
+     * 绘制游戏主页
+     * @param g2d 2D图形对象
+     */
     private void drawHomePage(Graphics2D g2d) {
         // 绘制网格背景
         g2d.setColor(new Color(253, 253, 245));
@@ -190,6 +262,10 @@ public class GamePanel extends JPanel implements Runnable{
         g2d.drawString(prompt, (getWidth() - promptWidth) / 2, getHeight() / 2 + 100);
     }
 
+    /**
+     * 绘制游戏UI界面
+     * @param g2d 2D图形对象
+     */
     private void drawGameUI(Graphics2D g2d) {
         // 绘制网格背景（游戏界面）
         g2d.setColor(new Color(253, 253, 245));
@@ -222,6 +298,10 @@ public class GamePanel extends JPanel implements Runnable{
         g2d.drawString(timeText, getWidth() - timeWidth - 40, 40); // 右边距40像素
     }
 
+    /**
+     * 绘制目标
+     * @param g2d 2D图形对象
+     */
     private void drawTargets(Graphics2D g2d) {
         for(Target target : targetList){
             if(target.isAlive()){
@@ -244,6 +324,9 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 
+    /**
+     * 游戏主线程运行方法
+     */
     @Override
     public void run() {
         while(isRunning && !Thread.currentThread().isInterrupted()){

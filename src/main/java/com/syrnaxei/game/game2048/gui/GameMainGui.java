@@ -5,6 +5,10 @@ import com.syrnaxei.game.game2048.core.MergeLogic;
 
 import javax.swing.*;
 
+/**
+ * 2048游戏测试入口
+ */
+
 public class GameMainGui {
     public static void main(String[] args) {
         // 在事件调度线程中启动GUI应用

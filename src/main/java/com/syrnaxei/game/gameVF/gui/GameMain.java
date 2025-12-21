@@ -3,6 +3,10 @@ package com.syrnaxei.game.gameVF.gui;
 import com.syrnaxei.game.gameVF.core.GamePanel;
 
 import javax.swing.*;
+
+/**
+ * VF主类，用于测试游戏。
+ */
 public class GameMain {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

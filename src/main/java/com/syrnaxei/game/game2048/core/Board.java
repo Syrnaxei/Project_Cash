@@ -3,6 +3,13 @@ package com.syrnaxei.game.game2048.core;
 import com.syrnaxei.game.game2048.api.Game2048Listener;
 import java.util.Random;
 
+/**
+ * 2048游戏棋盘类
+ * 管理游戏状态、分数计算、游戏逻辑判断等功能
+ *
+ * @author Syrnaxei
+ * @since 2025/12/15
+ */
 public class Board {
 
     private int[][] board;
@@ -13,6 +20,9 @@ public class Board {
     private final Random random = new Random();
 
     //===================================  创建棋盘 方法  ===================================
+    /**
+     * 初始化游戏棋盘
+     */
     public void createBoard() {
         try {
             board = new int[GameConfig.BOARD_SIZE][GameConfig.BOARD_SIZE];
@@ -24,6 +34,9 @@ public class Board {
     }
 
     //===================================  添加数字 方法  ===================================
+    /**
+     * 在棋盘随机空白位置添加数字(2或4)
+     */
     public void addNumber() {
         try {
             int row, col;
@@ -48,6 +61,10 @@ public class Board {
         }
     }
 
+    /**
+     * 判断棋盘是否存在空位置
+     * @return 存在空位置返回true，否则返回false
+     */
     public boolean hasEmptyLocation() {
         for (int[] row : board) {
             for (int num : row) {
@@ -60,6 +77,10 @@ public class Board {
     }
 
     //====================================  计分 方法  ====================================
+    /**
+     * 获取当前得分
+     * @return 当前分数
+     */
     public int getScore() {
         return score;
     }
@@ -87,6 +108,10 @@ public class Board {
     }
 
     //===================================  游戏结束 方法  ===================================
+    /**
+     * 判断游戏是否结束
+     * @return 游戏结束返回true，否则返回false
+     */
     public boolean isGameOver() {
         try {
             // 检查棋盘上是否有空位
@@ -123,6 +148,10 @@ public class Board {
     }
 
     //===================================  检查是否达到2048 方法  ===================================
+    /**
+     * 判断是否达到2048
+     * @return 达到2048返回true，否则返回false
+     */
     public boolean hasReached2048() {
         for (int i = 0; i < GameConfig.BOARD_SIZE; i++) {
             for (int j = 0; j < GameConfig.BOARD_SIZE; j++) {
@@ -135,14 +164,25 @@ public class Board {
     }
 
     //===================================  棋盘调用 方法  ===================================
+    /**
+     * 获取当前棋盘状态
+     * @return 棋盘二维数组
+     */
     public int[][] getBoard() {
         return board;
     }
 
+    /**
+     * 设置棋盘状态
+     * @param board 新的棋盘状态
+     */
     public void setBoard(int[][] board) {
         this.board = board;
     }
 
+    /**
+     * 重置棋盘
+     */
     public void resetBoard() {
         try {
             board = new int[GameConfig.BOARD_SIZE][GameConfig.BOARD_SIZE];
@@ -155,33 +195,58 @@ public class Board {
         }
     }
 
+    /**
+     * 设置游戏结束监听器
+     * @param listener 监听器实例
+     */
     public void setListener(Game2048Listener listener) {
         this.endListener = listener;
     }
 
     //===================================  倒计时 方法  ===================================
+    /**
+     * 获取剩余时间
+     * @return 剩余秒数
+     */
     public int getRemainingSeconds() {
         return remainingSeconds;
     }
 
+    /**
+     * 设置剩余时间
+     * @param seconds 剩余秒数
+     */
     public void setRemainingSeconds(int seconds) {
         this.remainingSeconds = Math.max(0, seconds);
     }
 
+    /**
+     * 减少剩余时间
+     */
     public void decrementRemainingSeconds() {
         if (remainingSeconds > 0) {
             remainingSeconds--;
         }
     }
 
+    /**
+     * 重置剩余时间
+     */
     public void resetRemainingSeconds() {
         this.remainingSeconds = GameConfig.INITIAL_COUNTDOWN;
     }
 
+    /**
+     * 判断时间是否耗尽
+     * @return 时间耗尽返回true，否则返回false
+     */
     public boolean isTimeUp() {
         return remainingSeconds <= 0;
     }
 
+    /**
+     * 触发游戏结束
+     */
     public void triggerGameOver() {
         try {
             // 重置倒计时，为下次游戏做准备
@@ -196,6 +261,9 @@ public class Board {
     }
 
     //==================================  测试 方法  ====================================
+    /**
+     * 测试方法：通过对话框设置分数
+     */
     public void boardTest() {
         String input = javax.swing.JOptionPane.showInputDialog("请输入要设置的分数:");
         if(input != null && !input.trim().isEmpty()) {

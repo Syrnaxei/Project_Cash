@@ -5,9 +5,17 @@ import com.syrnaxei.game.gameVF.core.GamePanel;
 
 import javax.swing.*;
 
-// VF游戏对外调用的唯一入口
+/**
+ * VF游戏对外调用的唯一入口
+ *
+ * @author Syrnaxei
+ * @since 2025/12/19
+ */
 public class GameVF {
-    // 启动VF游戏，并设置结束回调
+    /**
+     * 启动VF游戏，并设置结束回调
+     * @param listener 游戏结束监听器
+     */
     public static void start(GameVFListener listener) {
         SwingUtilities.invokeLater(() -> {
             GameGUI gameGUI = new GameGUI();

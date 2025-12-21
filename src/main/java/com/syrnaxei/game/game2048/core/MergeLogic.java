@@ -1,14 +1,28 @@
 package com.syrnaxei.game.game2048.core;
 
+/**
+ * 处理2048游戏方块合并逻辑的类
+ *
+ * @author Syrnaxei
+ * @since 2025/12/15
+ */
 public class MergeLogic {
 
     private final Board board;
 
+    /**
+     * 构造函数
+     * @param board 游戏面板对象
+     */
     public MergeLogic(Board board) {
         this.board = board;
     }
 
     //==================================  merge方法  ====================================
+    
+    /**
+     * 向右合并所有行
+     */
     public void mergeRight() {
         int[][] data = board.getBoard();
         for (int row = 0; row < GameConfig.BOARD_SIZE; row++) {
@@ -26,6 +40,9 @@ public class MergeLogic {
         board.setBoard(data);
     }
 
+    /**
+     * 向左合并所有行
+     */
     public void mergeLeft() {
         int[][] data = board.getBoard();
         for (int row = 0; row < GameConfig.BOARD_SIZE; row++) {
@@ -37,6 +54,9 @@ public class MergeLogic {
         board.setBoard(data);
     }
 
+    /**
+     * 向下合并所有列
+     */
     public void mergeDown() {
         int[][] data = board.getBoard();
         for (int col = 0; col < GameConfig.BOARD_SIZE; col++) {
@@ -50,6 +70,9 @@ public class MergeLogic {
         board.setBoard(data);
     }
 
+    /**
+     * 向上合并所有列
+     */
     public void mergeUp() {
         int[][] data = board.getBoard();
         for (int col = 0; col < GameConfig.BOARD_SIZE; col++) {
@@ -62,6 +85,12 @@ public class MergeLogic {
     }
 
     //==================================  adjacent方法  =================================
+    
+    /**
+     * 向右合并单行
+     * @param compactedRow 已经紧凑处理的行
+     * @return 合并后的行
+     */
     public int[] adjacentRight(int[] compactedRow) {
         int[] newRow = new int[GameConfig.BOARD_SIZE];
         int index = GameConfig.BOARD_SIZE - 1;
@@ -88,6 +117,11 @@ public class MergeLogic {
         return newRow;
     }
 
+    /**
+     * 向左合并单行
+     * @param compactedRow 已经紧凑处理的行
+     * @return 合并后的行
+     */
     public int[] adjacentLeft(int[] compactedRow) {
         int[] newRow = new int[GameConfig.BOARD_SIZE];
         int index = 0;
@@ -115,6 +149,11 @@ public class MergeLogic {
         return newRow;
     }
 
+    /**
+     * 向下合并单列
+     * @param compactedCol 已经紧凑处理的列
+     * @return 合并后的列
+     */
     public int[] adjacentDown(int[] compactedCol) {
         int[] newCol = new int[GameConfig.BOARD_SIZE];
         int index = GameConfig.BOARD_SIZE - 1;
@@ -140,6 +179,11 @@ public class MergeLogic {
         return newCol;
     }
 
+    /**
+     * 向上合并单列
+     * @param compactedCol 已经紧凑处理的列
+     * @return 合并后的列
+     */
     public int[] adjacentUp(int[] compactedCol) {
         int[] newCol = new int[GameConfig.BOARD_SIZE];
         int index = 0;
@@ -168,6 +212,12 @@ public class MergeLogic {
     }
 
     //==================================  compact方法  ==================================
+    
+    /**
+     * 将行中的非零元素向右紧凑
+     * @param row 原始行
+     * @return 紧凑后的行
+     */
     private int[] compactRight(int[] row) {
         int[] newRow = new int[GameConfig.BOARD_SIZE];
         int index = GameConfig.BOARD_SIZE - 1; // 从右侧开始填充
@@ -179,6 +229,11 @@ public class MergeLogic {
         return newRow;
     }
 
+    /**
+     * 将行中的非零元素向左紧凑
+     * @param row 原始行
+     * @return 紧凑后的行
+     */
     private int[] compactLeft(int[] row) {
         int[] newRow = new int[GameConfig.BOARD_SIZE];
         int index = 0;
@@ -190,6 +245,11 @@ public class MergeLogic {
         return newRow;
     }
 
+    /**
+     * 将列中的非零元素向下紧凑
+     * @param col 原始列
+     * @return 紧凑后的列
+     */
     private int[] compactDown(int[] col) {
         int[] newCol = new int[GameConfig.BOARD_SIZE];
         int index = GameConfig.BOARD_SIZE - 1;
@@ -201,6 +261,11 @@ public class MergeLogic {
         return newCol;
     }
 
+    /**
+     * 将列中的非零元素向上紧凑
+     * @param col 原始列
+     * @return 紧凑后的列
+     */
     private int[] compactUp(int[] col) {
         int[] newCol = new int[GameConfig.BOARD_SIZE];
         int index = 0;
@@ -213,6 +278,13 @@ public class MergeLogic {
     }
 
     //===========================  UP && DOWNs extra works  ===========================
+    
+    /**
+     * 从二维数组中提取指定列
+     * @param data 二维数组
+     * @param col 列索引
+     * @return 指定列的一维数组
+     */
     private int[] extractCol(int[][] data, int col) {
         int[] extractedcol = new int[GameConfig.BOARD_SIZE];
         for (int row = 0; row < GameConfig.BOARD_SIZE; row++) {
@@ -221,6 +293,12 @@ public class MergeLogic {
         return extractedcol;
     }
 
+    /**
+     * 将一维数组写入二维数组的指定列
+     * @param data 二维数组
+     * @param newCol 要写入的一维数组
+     * @param col 列索引
+     */
     private void writeColumn(int[][] data, int[] newCol, int col) {
         for (int row = 0; row < GameConfig.BOARD_SIZE; row++) {
             data[row][col] = newCol[row];

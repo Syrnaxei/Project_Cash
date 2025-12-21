@@ -6,9 +6,17 @@ import com.syrnaxei.game.game2048.gui.GameGUI;
 
 import javax.swing.SwingUtilities;
 
-// 2048对外调用的唯一入口
+/**
+ * 2048内置游戏的主入口类
+ *
+ * @author Syrnaxei
+ * @since 2025/12/15
+ */
 public class Game2048 {
-    // 启动2048游戏，并设置结束回调
+    /**
+     * 启动2048游戏
+     * @param listener 游戏结束监听器
+     */
     public static void start(Game2048Listener listener) {
         SwingUtilities.invokeLater(() -> {
             Board board = new Board();
