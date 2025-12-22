@@ -21,9 +21,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.formdev.flatlaf.FlatLightLaf
+import org.atom.Player
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.HostAccess
-import org.graalvm.polyglot.Source
 import java.io.ByteArrayOutputStream
 import javax.swing.JFrame
 import javax.swing.SwingUtilities
@@ -39,7 +39,7 @@ class Python3Engine {
     private val outputStream = ByteArrayOutputStream()
 
     private var context: Context? = null
-
+    private var commands: CommandRegistry? = null
     private fun initContext() {
         context?.close()
 
@@ -85,7 +85,12 @@ class Python3Engine {
      */
     fun restart() {
         initContext()
+        commands?.changeEngine(this)
         outputStream.reset()
+    }
+
+    fun setCommands(commands: CommandRegistry) {
+        this.commands = commands
     }
 }
 
@@ -169,16 +174,16 @@ fun PythonConsoleApp(engine: Python3Engine) {
                     .fillMaxWidth()
                     .onKeyEvent { event ->
                         if (event.key == Key.Enter && event.type == KeyEventType.KeyUp) {
-                            if(inputText.trim() == "NewCli") {
+                            if (inputText.trim() == "NewCli") {
                                 engine.restart()
                                 history.clear()
                                 history.add("NewCli" to ">>> 创建成功")
                                 inputText = ""
-                            }else if(inputText.isNotBlank()){
+                            } else if (inputText.isNotBlank()) {
                                 val response = engine.execute(inputText)
                                 history.add(inputText to response)
                                 inputText = ""
-                            }else{
+                            } else {
                                 inputText = ""
                             }
                             true
@@ -216,9 +221,14 @@ fun getCodePanel(engine: Python3Engine): ComposePanel {
  * 获取引擎
  * @return [Python3Engine]
  */
-fun getEngine(): Python3Engine {
+fun getEngine(context: CommandRegistry?): Python3Engine {
     val engine = Python3Engine()
     engine.restart()
+
+    context?.run {
+        changeEngine(engine)
+        engine.setCommands(this)
+    }
     engine.inject("Egg", EasterEgg())
     return engine
 }
@@ -226,12 +236,17 @@ fun getEngine(): Python3Engine {
 fun main() {
 
     FlatLightLaf.setup()
-
+    val engine = getEngine(null)
+    val registry = CommandRegistry(engine)
+    registry.registerAll(
+        Command("p1", Player("公务员", 0, 0, 0)),
+        Command("p2", Player("学生", 0, 0, 0)),
+    )
     SwingUtilities.invokeLater {
         val frame = JFrame("Thanos - Python 3 Console")
         frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
         frame.setSize(900, 700)
-        frame.setContentPane(getCodePanel(getEngine()))
+        frame.setContentPane(getCodePanel(engine))
         frame.setLocationRelativeTo(null)
         frame.isVisible = true
     }

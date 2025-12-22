@@ -10,10 +10,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import androidx.compose.ui.awt.ComposePanel;
 import org.atom.Player;
 import top.liewyoung.strategy.asset.Asset;
 import top.liewyoung.strategy.MapPostition;
 import top.liewyoung.strategy.TitlesTypes;
+import top.liewyoung.thanos.Command;
 import top.liewyoung.view.Stater;
 import top.liewyoung.view.component.MDbutton;
 import top.liewyoung.view.component.MDialog;
@@ -33,6 +36,7 @@ public class DashboardPanel extends JPanel {
 
     private final InfoPanel infoPanel;
     private final PropertyPanel propertyPanel;
+    private ComposePanel about;
 
     // Surface: 整个窗口的背景，稍微带一点点灰/绿的暖白
     private final Color MD_SURFACE = new Color(253, 253, 245);
@@ -65,7 +69,9 @@ public class DashboardPanel extends JPanel {
     private static int lastDice = 0;
     private final JFrame mainframe;
 
-    public DashboardPanel(MapDraw map,JFrame mainframe) {
+    public DashboardPanel(MapDraw map, JFrame mainframe) {
+
+
         this.mainframe = mainframe;
         setPreferredSize(new Dimension(300, getHeight()));
         this.map = map;
@@ -76,6 +82,12 @@ public class DashboardPanel extends JPanel {
 
         // 初始化默认玩家
         initializeDefaultPlayer();
+
+
+        //先初始化一下 about 面板
+        SwingUtilities.invokeLater(() -> {
+            about = AboutKt.getAboutPanel(currentPlayer, new Command("event", eventProcessor));
+        });
 
         // 初始化子面板
         infoPanel = new InfoPanel();
@@ -92,14 +104,26 @@ public class DashboardPanel extends JPanel {
 
         JButton helpButton = buttonFactory("关于");
         helpButton.addActionListener(e -> {
+
+            JFrame frame = new JFrame("关于");
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    frame.add(DashboardPanel.this.about);
+                    frame.setSize(1200, 850);
+                    frame.setLocationRelativeTo(DashboardPanel.this);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }
+            });
+            thread.start();
+
+            MDialog.showMessageDialog(this, "打开中，请勿重复点击", "提示", MDialog.MessageType.INFO);
+
             SwingUtilities.invokeLater(() -> {
-                JFrame frame = new JFrame("关于");
-                frame.add(AboutKt.getAboutPanel(currentPlayer));
-                frame.setSize(1200, 835);
-                frame.setLocation(300, 100);
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.setVisible(true);
             });
+
+
         });
 
         // 为了让按钮不被拉伸，放进一个 FlowLayout 的 Panel
@@ -139,11 +163,9 @@ public class DashboardPanel extends JPanel {
                     mapPostition.mapOrder.get(playerPosition).y());
 
 
-
             map.updatePlayerPosition(
                     mapPostition.mapOrder.get(playerPosition).x(),
                     mapPostition.mapOrder.get(playerPosition).y());
-
 
 
             // 触发事件处理
@@ -206,7 +228,7 @@ public class DashboardPanel extends JPanel {
      * @param player
      */
     private boolean gameOver(Player player) {
-        if(player.getCash() <= 0) {
+        if (player.getCash() <= 0) {
             mainframe.dispose();
             MDialog dialog = new MDialog("游戏结束", "重新开始");
             dialog.setVisible(true);
@@ -269,7 +291,6 @@ public class DashboardPanel extends JPanel {
             g2.setColor(getBackground());
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), 24, 24); // 24px 圆角
         }
-
 
 
         private JLabel createInfoLabel(String text) {
@@ -345,7 +366,7 @@ public class DashboardPanel extends JPanel {
             ((JComponent) table
                     .getTableHeader()
                     .getDefaultRenderer()).setBorder(
-                            new EmptyBorder(0, 0, 0, 0));
+                    new EmptyBorder(0, 0, 0, 0));
 
             DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -376,14 +397,14 @@ public class DashboardPanel extends JPanel {
                 String depreciation,
                 String status) {
             tableModel.addRow(
-                    new Object[] { name, value, depreciation, status });
+                    new Object[]{name, value, depreciation, status});
         }
 
         /**
          * 添加资产行
          */
         public void addAssetRow(Asset asset) {
-            tableModel.addRow(new Object[] {
+            tableModel.addRow(new Object[]{
                     asset.getType().getIcon() + " " + asset.getName(),
                     asset.getCurrentValue() + "元",
                     asset.getDepreciationRate(),

@@ -12,21 +12,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposePanel
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.formdev.flatlaf.FlatLightLaf
 import org.atom.Player
+import top.liewyoung.strategy.TitlesTypes
+import top.liewyoung.thanos.CommandRegistry
+import top.liewyoung.thanos.Command
 import top.liewyoung.thanos.getCodePanel
 import top.liewyoung.thanos.getEngine
 import top.liewyoung.view.ColorSystem.AppTheme
@@ -41,7 +41,26 @@ import javax.swing.SwingUtilities
  * 获取关于面板
  * @return [ComposePanel]
  */
-fun getAboutPanel(player: Player): ComposePanel {
+fun getAboutPanel(player: Player,vararg context: Command): ComposePanel {
+
+    val commandConfig = CommandRegistry(null)
+    val engine by lazy { getEngine(commandConfig) }
+
+    /**
+     * 注册机
+     */
+    fun registryEngine( ){
+
+        commandConfig.registerAll(
+            Command("player", player),
+            Command("titles", TitlesTypes.entries.toTypedArray())
+        )
+
+        for(command in context){
+            commandConfig.register(command)
+        }
+    }
+
     return ComposePanel().apply {
         setContent {
             AppTheme {
@@ -88,8 +107,7 @@ fun getAboutPanel(player: Player): ComposePanel {
                                         val frame = JFrame("控制台")
                                         val dialog = MDialog ("提示","由于引擎问题打开会耗时，请耐心等待", MDialog.MessageType.INFO)
                                         dialog.isVisible = true
-                                        val engine = getEngine()
-                                        engine.inject("player", player)
+                                        registryEngine()
                                         frame.add(getCodePanel(engine))
                                         frame.setSize(800, 600)
                                         frame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
