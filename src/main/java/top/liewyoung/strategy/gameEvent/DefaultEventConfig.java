@@ -42,14 +42,15 @@ public class DefaultEventConfig {
                 new WindfallEvent(),
                 new CarAccidentEvent(),
                 new LotteryEvent(),
-                new HospitalEvent());
+                new HospitalEvent(),
+                new BetBallEvent());
 
         // 银行事件
         registry.registerAll(
-                /*new DepositEvent(),
+                new DepositEvent(),
                 new WithdrawEvent(),
                 new LoanEvent(),
-                new RepaymentEvent(),*/
+                new RepaymentEvent(),
                 new BargainEvent()
         );
 

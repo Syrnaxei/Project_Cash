@@ -343,6 +343,7 @@ public class MapDraw extends JPanel {
         
         Graphics2D g2d = (Graphics2D) g.create();
         enableAntialiasing(g2d);
+        drawBackground(g2d);
         
         g2d.setColor(BACKGROUND_COLOR);
         
@@ -467,6 +468,25 @@ public class MapDraw extends JPanel {
      */
     private double easeOutCubic(double t) {
         return 1 - Math.pow(1 - t, 3);
+    }
+
+
+    /**
+     * 绘制背景
+     *
+     * @param g2d G2D
+     */
+    private void drawBackground(Graphics2D g2d) {
+        // 绘制柔和的网格线（装饰）
+        g2d.setColor(new Color(MaterialPalette.MOSS.surfaceVariant().getRGB() & 0x40FFFFFF, true));
+        int gridSize = 40;
+        for (int x = 0; x < getWidth(); x += gridSize) {
+            g2d.drawLine(x, 0, x, getHeight());
+        }
+        for (int y = 0; y < getHeight(); y += gridSize) {
+            g2d.drawLine(0, y, getWidth(), y);
+        }
+
     }
 
     
@@ -646,7 +666,7 @@ public class MapDraw extends JPanel {
     }
     
     
-    // ==================== 辅助方法 ====================
+
     
     /**
      * 启用抗锯齿

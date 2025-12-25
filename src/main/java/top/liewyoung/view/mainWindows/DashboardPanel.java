@@ -86,7 +86,7 @@ public class DashboardPanel extends JPanel {
 
         //先初始化一下 about 面板
         SwingUtilities.invokeLater(() -> {
-            about = AboutKt.getAboutPanel(currentPlayer, new Command("event", eventProcessor));
+            about = AboutKt.getAboutPanel(currentPlayer, new Command("event", eventProcessor),new Command("titles",TitlesTypes.values()));
         });
 
         // 初始化子面板
