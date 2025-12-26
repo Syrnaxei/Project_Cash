@@ -28,7 +28,6 @@ import top.liewyoung.view.tools.EventProcessor;
  * @since 2025/12/14
  */
 
-
 record FontSize(int title, int heavy, int normal) {
 }
 
@@ -71,7 +70,6 @@ public class DashboardPanel extends JPanel {
 
     public DashboardPanel(MapDraw map, JFrame mainframe) {
 
-
         this.mainframe = mainframe;
         setPreferredSize(new Dimension(300, getHeight()));
         this.map = map;
@@ -83,10 +81,10 @@ public class DashboardPanel extends JPanel {
         // 初始化默认玩家
         initializeDefaultPlayer();
 
-
-        //先初始化一下 about 面板
+        // 先初始化一下 about 面板
         SwingUtilities.invokeLater(() -> {
-            about = AboutKt.getAboutPanel(currentPlayer, new Command("event", eventProcessor),new Command("titles",TitlesTypes.values()));
+            about = AboutKt.getAboutPanel(currentPlayer, new Command("event", eventProcessor),
+                    new Command("titles", TitlesTypes.values()));
         });
 
         // 初始化子面板
@@ -123,7 +121,6 @@ public class DashboardPanel extends JPanel {
                 frame.setVisible(true);
             });
 
-
         });
 
         // 为了让按钮不被拉伸，放进一个 FlowLayout 的 Panel
@@ -150,7 +147,6 @@ public class DashboardPanel extends JPanel {
     public void diceEvent() {
         DashboardPanel.lastDice = dice.nextInt(1, 7);
 
-
         // 先触发骰子滚动动画
         map.rollDice(DashboardPanel.lastDice, () -> {
             // 动画完成后执行后续逻辑
@@ -162,15 +158,13 @@ public class DashboardPanel extends JPanel {
                     mapPostition.mapOrder.get(playerPosition).x(),
                     mapPostition.mapOrder.get(playerPosition).y());
 
-
             map.updatePlayerPosition(
                     mapPostition.mapOrder.get(playerPosition).x(),
                     mapPostition.mapOrder.get(playerPosition).y());
 
-
             // 触发事件处理
             if (eventProcessor != null && !gameOver(currentPlayer)) {
-                //currentPlayer.setCash(0);
+                // currentPlayer.setCash(0);
                 // 更新所有资产价值（每次骰子后）
                 currentPlayer.getAssetManager().updateAllAssets(dice);
                 eventProcessor.processEvent(currentType);
@@ -223,20 +217,41 @@ public class DashboardPanel extends JPanel {
     }
 
     /**
-     * 游戏结束
+     * 游戏结束（包括失败和胜利）
      *
-     * @param player
+     * @param player 当前玩家
+     * @return 游戏是否结束（失败或胜利）
      */
     private boolean gameOver(Player player) {
-        if (player.getCash() <= 0) {
+        // 计算总被动收入（被动收入 + 资产月收入）
+        int totalPassiveIncome = player.getPassiveIncome()
+                + player.getAssetManager().getTotalMonthlyIncome();
+
+        // 胜利条件：总被动收入 >= 月支出（实现财务自由）
+        if (totalPassiveIncome >= player.getMonthlyExpenses() && totalPassiveIncome > 0) {
             mainframe.dispose();
-            MDialog dialog = new MDialog("游戏结束", "重新开始");
+            String victoryMessage = String.format(
+                    "🎉 恭喜！实现资金正向循环！\n\n被动收入：%d元/月\n月支出：%d元\n\n你已经不需要工作也能生活了！",
+                    totalPassiveIncome, player.getMonthlyExpenses());
+            MDialog dialog = new MDialog("资金正向循环", victoryMessage, MDialog.MessageType.INFO);
             dialog.setVisible(true);
             SwingUtilities.invokeLater(() -> {
                 Stater.main(null);
             });
             return true;
         }
+
+        // 失败条件：现金 <= 0（破产）
+        if (player.getCash() <= 0) {
+            mainframe.dispose();
+            MDialog dialog = new MDialog("游戏结束", "💸 你已经破产了！", MDialog.MessageType.ERROR);
+            dialog.setVisible(true);
+            SwingUtilities.invokeLater(() -> {
+                Stater.main(null);
+            });
+            return true;
+        }
+
         return false;
     }
 
@@ -291,7 +306,6 @@ public class DashboardPanel extends JPanel {
             g2.setColor(getBackground());
             g2.fillRoundRect(0, 0, getWidth(), getHeight(), 24, 24); // 24px 圆角
         }
-
 
         private JLabel createInfoLabel(String text) {
             JLabel label = new JLabel(text);
@@ -366,7 +380,7 @@ public class DashboardPanel extends JPanel {
             ((JComponent) table
                     .getTableHeader()
                     .getDefaultRenderer()).setBorder(
-                    new EmptyBorder(0, 0, 0, 0));
+                            new EmptyBorder(0, 0, 0, 0));
 
             DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -397,14 +411,14 @@ public class DashboardPanel extends JPanel {
                 String depreciation,
                 String status) {
             tableModel.addRow(
-                    new Object[]{name, value, depreciation, status});
+                    new Object[] { name, value, depreciation, status });
         }
 
         /**
          * 添加资产行
          */
         public void addAssetRow(Asset asset) {
-            tableModel.addRow(new Object[]{
+            tableModel.addRow(new Object[] {
                     asset.getType().getIcon() + " " + asset.getName(),
                     asset.getCurrentValue() + "元",
                     asset.getDepreciationRate(),

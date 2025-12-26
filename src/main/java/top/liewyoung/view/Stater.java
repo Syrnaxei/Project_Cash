@@ -8,6 +8,7 @@ import java.awt.*;
 
 
 /**
+ *启动游戏跳板
  *
  * @author LiewYoung
  * @since 2025/12/19

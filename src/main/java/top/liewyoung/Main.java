@@ -1,3 +1,5 @@
+package top.liewyoung;
+
 import com.formdev.flatlaf.FlatLightLaf;
 import top.liewyoung.view.mainWindows.HomePageComposeKt;
 
