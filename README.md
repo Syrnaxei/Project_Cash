@@ -1,6 +1,6 @@
 ﻿<p align="center">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   <h1 align="center">💰 CashFlow</h1>
   <p align="center">
@@ -274,6 +274,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Syrnaxei"><img src="https://avatars.githubusercontent.com/u/81091444?v=4?s=100" width="100px;" alt="Syrnaxei"/><br /><sub><b>Syrnaxei</b></sub></a><br /><a href="https://github.com/LiewYoung/Project_Cash/commits?author=Syrnaxei" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MMMorning-eve"><img src="https://avatars.githubusercontent.com/u/197580202?v=4?s=100" width="100px;" alt="MMMorning-eve"/><br /><sub><b>MMMorning-eve</b></sub></a><br /><a href="https://github.com/LiewYoung/Project_Cash/commits?author=MMMorning-eve" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
